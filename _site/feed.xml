@@ -1,0 +1,1011 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-09-01T14:26:34-07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Mike Pereira</title><subtitle>Personal webpage of Mike Pereira</subtitle><author><name>Mike Pereira</name><email>mike.pereira@minesparis.psl.eu</email></author><entry><title type="html">A few take-away messages from the conference Petroleum Geostatistics 2019</title><link href="http://localhost:4000/posts/2019/10/pg2019/" rel="alternate" type="text/html" title="A few take-away messages from the conference Petroleum Geostatistics 2019" /><published>2019-10-01T00:00:00-07:00</published><updated>2019-10-01T00:00:00-07:00</updated><id>http://localhost:4000/posts/2019/10/pg2019</id><content type="html" xml:base="http://localhost:4000/posts/2019/10/pg2019/">&lt;p&gt;On September 2-6, 2019, I attended on behalf of &lt;a href=&quot;https://estimages.com/&quot;&gt;Estimages&lt;/a&gt; (the company funding my PhD) the conference &lt;a href=&quot;https://www.earthdoc.org/content/proceedings/florence2019&quot;&gt;Petroleum Geostatistics 2019&lt;/a&gt; in Florence, Italy. Here is my take on the messages that were delivered during this exciting conference.&lt;/p&gt;
+
+&lt;p&gt;For the first time, a whole session was dedicated to Machine Learning (ML), clearly showing the growing interest of the industry for the subject. It was kicked off by a keynote lecture which focused on how ML could be applied to make better reservoir predictions. In his lecture, Pr. Demyanov insisted on the fact that these algorithms should not be used as black boxes on the data. Instead they should be carefully designed with the help of a domain expert in order to ensure the quality and the interpretability of their outputs. Geologists, geophysicians and geostatisticians, let’s rejoice! It seems like we will not be replaced by an artificial intelligence (that) soon…&lt;/p&gt;
+
+&lt;p&gt;Several talks presented applications of some “trendy” ML algorithms to seismic and geological data, among which Convolutional Neural Networks and Generative Adversarial Networks (GANs). In particular, the latter proved to be a very serious contender to the use of multi-point statistics for facies inversion and geological image synthesis.&lt;/p&gt;
+
+&lt;p&gt;As for Geostatistics, one can note the return in an industrial context of neglected geostatistical methods, such as simulations using the turning bands method or the use of truncated Gaussian fields for facies inversion. As for the new methods, we retain the use of the stochastic partial derivative (SPDE) approach as a new paradigm allowing to easily integrate local geometric information and work with non-stationary fields. Estimages (represented by yours truly) and MINES ParisTech (represented by researchers Nicolas Desassis and Didier Renard) presented successful applications of this approach to, respectively, seismic image filtering and facies inversion.&lt;/p&gt;
+
+&lt;p&gt;Finally, a need for practical solutions to inversion problems transpired from the talks and from a very interesting discussion that concluded the conference. Geostatistics are most useful when integrated in fully-operational workflows, and some of which were presented during the conference. Also, communication is key: designing complex algorithms, even if they work well, will not ensure that they will be subsequently used by practitioners…&lt;/p&gt;
+
+&lt;p&gt;Big thanks to EAGE for organizing a great conference. We all look forward to the next one!&lt;/p&gt;</content><author><name>Mike Pereira</name><email>mike.pereira@minesparis.psl.eu</email></author><category term="Petroleum Geostatistics" /><category term="Conference" /><summary type="html">On September 2-6, 2019, I attended on behalf of Estimages (the company funding my PhD) the conference Petroleum Geostatistics 2019 in Florence, Italy. Here is my take on the messages that were delivered during this exciting conference.</summary></entry><entry><title type="html">Markov chain Monte Carlo and tall data</title><link href="http://localhost:4000/posts/2018/01/mcmc_tall/" rel="alternate" type="text/html" title="Markov chain Monte Carlo and tall data" /><published>2018-01-18T00:00:00-08:00</published><updated>2018-01-18T00:00:00-08:00</updated><id>http://localhost:4000/posts/2018/01/mcmc_tall</id><content type="html" xml:base="http://localhost:4000/posts/2018/01/mcmc_tall/">&lt;p&gt;This note is an attempt to convey the main ideas and notions of the talk entitled “On Markov chain Monte Carlo and tall data” given by Rémi Bardenet (CNRS, Lille, France) during the Stochastic algorithm Day 2017 (&lt;em&gt;Journée algorithmes stochastiques 2017&lt;/em&gt;). This conference was held at Université Paris Dauphine (Paris, France) on December 1st, 2017.&lt;/p&gt;
+
+&lt;h2 id=&quot;metropolis-hastings-algorithm&quot;&gt;Metropolis-Hastings algorithm&lt;/h2&gt;
+
+&lt;p&gt;The Metropolis-Hastings algorithm builds a Markov Chain
+\((X_k)_{k\geq 1}\) with a given limiting distribution \(\pi(X)\). It
+requires the specification of a transition distribution that controls
+the exploration process of the Markov Chain.&lt;/p&gt;
+
+&lt;p&gt;Basically, at a state \(X_k\) of the chain, two steps are required to get
+to the next state:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Draw a candidate \(X^*\) for the new state \(X_{k+1}\) from the
+transition distribution \(\pi(X_k \rightarrow .)\)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Accept the update \(X_{k+1} \leftarrow X^*\) with probability
+\(\alpha(X^*,X_k)=\frac{\pi(X^*)}{\pi(X_k)}\) (otherwise,
+\(X_{k+1}\leftarrow X_k\))&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Notice in particular that \(\pi(X)\) is only involved in the computation
+of the probability \(\alpha\). Knowing it up to a multiplicative constant
+is therefore sufficient.&lt;/p&gt;
+
+&lt;p&gt;The samples from such Markov Chains are used to compute complex
+integrals of the form : \(\int h(X)\pi(X) dX=\mathbb{E}[h(X)]\) Indeed,
+if \((x_1,...,x_M)\) are \(M\) independent samples from the chain, the
+central limit theorem ensures that:&lt;/p&gt;
+
+\[\sqrt{M}\left[\frac{1}{M}\sum\limits_{m=1}^M h(x_m) - \int h(X)\pi(X) dX \right] \rightarrow \mathcal{N}(0,\sigma^2_{\text{lim}}(h))
+\label{sumInt}\]
+
+&lt;h2 id=&quot;bayesian-statistics&quot;&gt;Bayesian statistics&lt;/h2&gt;
+
+&lt;p&gt;Statisticians recommend &lt;em&gt;actions&lt;/em&gt; based on a model
+\(\pi(\theta,x_1,...,x_N)\) on:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;\(x_1,...,x_N\) : some observable data&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;\(\theta\) : the (underlying) state of the world&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If a loss (function) \(L(\theta,a)\) can be associated with taking action
+\(a\) when the state of the world is \(\theta\), then its minimization
+provides a criterion on the choice of the &quot;best&quot; action to recommend
+\(a^*\). Given that the actual state of the world is unknown, the
+minimization problem becomes :&lt;/p&gt;
+
+\[a^*=\mathop{\text{argmin}}\limits_a \int L(\theta,a)\pi(\theta \vert x_1,...,x_N)d\theta\]
+
+&lt;p&gt;where \(\pi(\theta \vert x_1,...,x_N)\) is the probability that the world
+is in state \(\theta\) given the observations \(x_1,...,x_N\). One way to
+compute this integral is to use (independent) samples from
+\(\pi(\theta \vert x_1,...,x_n)\).&lt;/p&gt;
+
+&lt;p&gt;A common situation is the one where:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;the beliefs on \(\theta\) &lt;strong&gt;prior&lt;/strong&gt; to an experiment (leading to the
+observations) can be summarized into a distribution \(\pi(\theta)\)
+(called &lt;em&gt;prior distribution&lt;/em&gt;)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;the measurements/observations \(x_1,...,x_N\) are assumed to be i.i.d.
+from the known distribution \(\pi(.\vert \theta)\) Then, Bayes’
+identity gives
+\(\pi(\theta \vert x_1,...,x_N) \propto \pi(\theta)\prod\limits_{i=1}^N\pi(x_i\vert \theta)\)&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Therefore, the Metropolis-Hastings algorithm is particularly suited for
+drawing samples from \(\pi(\theta \vert x_1,...,x_N)\) as it only requires
+to know the target distribution up to a multiplicative constant, which
+is the case here. In fact, the associated update probability is given
+by:&lt;/p&gt;
+
+\[\alpha(\theta^*,\theta_k)=\frac{\pi(\theta^*)\prod\limits_{i=1}^N\pi(x_i\vert \theta^*)}{ \pi(\theta_k)\prod\limits_{i=1}^N\pi(x_i\vert \theta_k)}\]
+
+&lt;p&gt;The computation of this probability, which has to be done at each
+iteration of the algorithm, may be very costly if the number of
+observations \(N\) is huge, and even more so if these observations are
+scattered across multiple servers.&lt;/p&gt;
+
+&lt;p&gt;A workaround is to find a way to compute a proxy of the probability that
+would only require a (small) subset of all the observations. Basically,
+the goal is to design a Bayesian equivalent of the Stochastic gradient
+decent algorithm.&lt;/p&gt;
+
+&lt;h2 id=&quot;divide-and-conquer-approaches&quot;&gt;Divide-and-conquer approaches&lt;/h2&gt;
+
+&lt;p&gt;In these approaches, the dataset is divided into batches. Then, the MCMC
+algorithms are run separately on each batch. Finally the results are
+combined using one of the following approaches:&lt;/p&gt;
+
+&lt;h3 id=&quot;multiplication-of-smooth-approximations-of-the-batch-posterior-distributions&quot;&gt;Multiplication of smooth approximations of the batch posterior distributions&lt;/h3&gt;
+
+&lt;h4 id=&quot;presentation&quot;&gt;Presentation&lt;/h4&gt;
+&lt;p&gt;The data \(\boldsymbol x\) is separated into \(S\) batches \(\boldsymbol x =(\boldsymbol x_1,...,\boldsymbol x_S)\). Denote \(\theta_1^{(s)},...,\theta_M^{(s)}\) the samples from the posterior \(\pi(\theta\vert\boldsymbol x_s)\) obtained after running the MCMC algorithm on batch \(\boldsymbol x_s\). If \(\pi(\theta\vert\boldsymbol x_s)\) is Gaussian (asymptotically true when \(M\rightarrow \infty\)), and we denote \(\pi(\theta\vert\boldsymbol x_s)\sim\mathcal{N}(\mu_s,\Sigma_s)\) then&lt;/p&gt;
+
+\[\prod\limits_{s}\pi(\theta\vert\boldsymbol x_s)\sim\mathcal{N}\left(V \sum\limits_{s}\Sigma_s^{-1}\mu_s,\; V \right), \quad V=\left(\sum\limits_{s}\Sigma_s^{-1}\right)^{-1}\]
+
+&lt;p&gt;On the other hand, by sampling from
+\(\pi(\theta\vert\boldsymbol x_s)\propto \pi(\boldsymbol x_s\vert \theta)\pi(\theta)^{1/S}\),
+we get&lt;/p&gt;
+
+\[\prod\limits_{s}\pi(\theta\vert\boldsymbol x_s) \propto \pi(\theta)\prod\limits_{s}\pi(\boldsymbol x_s\vert\theta) = \pi(\theta)\pi(\boldsymbol x\vert\theta) \propto \pi(\theta \vert \boldsymbol x)\]
+
+&lt;p&gt;Therefore, we have&lt;/p&gt;
+
+\[\pi(\theta \vert \boldsymbol x) \propto \mathcal{N}\left(V\sum\limits_{s}\Sigma_s^{-1}\mu_s,\; V\right)\]
+
+&lt;p&gt;where \((\mu_s, \Sigma_s)\) can be approximated by the sample mean
+and covariance from the MCMC run, namely:&lt;/p&gt;
+
+\[\widehat{\mu}_s=\frac{1}{M}\sum\limits_{m=1}^M \theta_m^{(s)},\]
+
+\[\widehat{\Sigma}_s=\frac{1}{M}\sum\limits_{m=1}^M (\theta_m^{(s)}-\widehat{\mu}_s)(\theta_m^{(s)}-\widehat{\mu}_s)^T, \quad \widehat{V}=\left(\sum\limits_s \widehat{\Sigma}_s^{-1}\right)^{-1}\]
+
+&lt;h4 id=&quot;drawback&quot;&gt;Drawback&lt;/h4&gt;
+&lt;p&gt;The mean squared error of resulting estimators scales exponentially with the number of batches.&lt;/p&gt;
+
+&lt;h3 id=&quot;target-a-more-tractable-result-than-the-full-posterior&quot;&gt;Target a more tractable result than the full posterior&lt;/h3&gt;
+
+&lt;h4 id=&quot;presentation-1&quot;&gt;Presentation&lt;/h4&gt;
+&lt;p&gt;Given \(S\) posteriors \(\pi(\theta,\boldsymbol x_1),...,\pi(\theta,\boldsymbol x_S)\) obtained from the MCMC runs on batches \(\boldsymbol x_1,...,\boldsymbol x_S\), instead of trying to estimate the full posterior, we can rather compute the equivalent for probability measures of the &lt;em&gt;median&lt;/em&gt; or the &lt;em&gt;barycentre&lt;/em&gt; of the posteriors.&lt;/p&gt;
+
+&lt;h4 id=&quot;drawback-1&quot;&gt;Drawback&lt;/h4&gt;
+&lt;p&gt;The statistical meaning of the result is unclear.&lt;/p&gt;
+
+&lt;h2 id=&quot;subsampling-approaches&quot;&gt;Subsampling approaches&lt;/h2&gt;
+
+&lt;p&gt;The idea is to replace the acceptance probability \(\alpha\) of the
+Metropolis-Hastings algorithm by an estimator computed on a subset of
+the whole dataset. To do so, notice that:&lt;/p&gt;
+
+\[\log\alpha(\theta^*,\theta)=\log\frac{\pi(\theta^*)}{\pi(\theta)}+\sum\limits_{i=1}^N\log\frac{\pi(x_i\vert \theta^*)}{\pi(x_i\vert \theta)}\]
+
+&lt;p&gt;In particular, if \(u\sim\mathcal{U}(]0,1])\) we have:&lt;/p&gt;
+
+\[\begin{aligned}
+u\le \alpha(\theta^*,\theta) &amp;amp;\Leftrightarrow \log u \le \log \alpha \Leftrightarrow \log u - \log\frac{\pi(\theta^*)}{\pi(\theta)} \le \sum\limits_{i=1}^N\log\frac{\pi(x_i\vert \theta^*)}{\pi(x_i\vert \theta)} \\
+&amp;amp;\Leftrightarrow \frac{1}{N}\log\left( u \frac{\pi(\theta)}{\pi(\theta^*)}\right) \le \frac{1}{N} \sum\limits_{i=1}^N\log\frac{\pi(x_i\vert \theta^*)}{\pi(x_i\vert \theta)} \end{aligned}\]
+
+&lt;p&gt;Introducing:&lt;/p&gt;
+
+\[\psi(u,\theta,\theta^*):=\frac{1}{n}\log\left( u \frac{\pi(\theta)}{\pi(\theta^*)}\right)\]
+
+&lt;p&gt;and&lt;/p&gt;
+
+\[\Lambda_N(\theta,\theta^*):=\frac{1}{N}\sum\limits_{i=1}^N\log\frac{\pi(x_i\vert \theta^*)}{\pi(x_i\vert \theta)}=\frac{1}{\vert \boldsymbol x\vert}\sum\limits_{x\in\boldsymbol x}\log\frac{\pi(x\vert \theta^*)}{\pi(x\vert \theta)}\]
+
+&lt;p&gt;we get,&lt;/p&gt;
+
+\[\mathbb{P}\big(\Lambda_N(\theta,\theta^*) \ge \psi(u,\theta,\theta^*)\big)=\mathbb{P}(u\leq \alpha(\theta^*,\theta))=\min(\alpha(\theta^*,\theta),1)\]
+
+&lt;p&gt;Therefore, the MH algorithm is based on the verification of whether&lt;/p&gt;
+
+\[\Lambda_N(\theta,\theta^*) \ge \psi(u,\theta,\theta^*)
+\label{accDec}\]
+
+&lt;p&gt;Computing \(\Lambda_N(\theta,\theta^*)\) constitutes the
+bottleneck of the method. It can be replaced by an unbiased estimator
+computed from only a small subset \(\boldsymbol x_s\) of \(S &amp;lt; N\) (uniform) samples
+of the whole dataset:&lt;/p&gt;
+
+\[\Lambda_s(\theta,\theta^*)=\frac{1}{S}\sum\limits_{x\in\boldsymbol x_s}\log\frac{\pi(x\vert \theta^*)}{\pi(x\vert \theta)}\]
+
+&lt;p&gt;In particular, this problem is equivalent to the estimation of the mean
+\(\Lambda_N(\theta,\theta^*)\) of the population&lt;/p&gt;
+
+\[\left\lbrace\log\frac{\pi(x_i\vert \theta^*)}{\pi(x_i\vert \theta)}, i\in [\![1,N]\!] \right\rbrace\]
+
+&lt;p&gt;by the mean  \(\Lambda_s(\theta,\theta^*)\) of one of its samples. Two
+methods can be used to check whether \(\Lambda_N(\theta,\theta^*) \ge \psi(u,\theta,\theta^*)\) based on the values of \(\Lambda_s(\theta,\theta^*)\) and \(\psi(u,\theta,\theta^*)\), with a tolerated error \(\epsilon\) (fixed for all iterations):&lt;/p&gt;
+
+&lt;h3 id=&quot;t-tests-on-the-sample-mean-lambda_sthetatheta&quot;&gt;T-tests on the sample mean \(\Lambda_s(\theta,\theta^*)\)&lt;/h3&gt;
+
+&lt;p&gt;The hypothesis
+\(\Lambda_s(\theta,\theta^*)&amp;gt;\psi(u,\theta,\theta^*)\) can be
+tested using the statistic :&lt;/p&gt;
+
+\[t_s=\frac{\Lambda_s(\theta,\theta^*)-\psi(u,\theta,\theta^*)}{\sqrt{(S-N)/(N-1)}\sqrt{\sigma_s^2(\theta,\theta^*)/S}} \quad\]
+
+&lt;p&gt;where&lt;/p&gt;
+
+\[\sigma_s^2(\theta,\theta^*) = \frac{1}{S-1}\sum\limits_{x\in\boldsymbol x_s} \left(\log\frac{\pi(x\vert \theta^*)}{\pi(x\vert \theta)}-\Lambda_s(\theta,\theta^*)\right)^2,\]
+
+&lt;p&gt;which is assumed to follow a Student t-distribution with \(S-1\)
+degrees of freedom (denoted \(\text{Student}(S-1)\)) when \(S\) is
+big enough.&lt;/p&gt;
+
+&lt;p&gt;The tests proceed in two steps :&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;A first test is realized to check whether the population
+mean \(\Lambda_N(\theta,\theta^*)\) is significantly different
+from the threshold \(\psi(u,\theta,\theta^*)\). It will be the
+case if the statistic \(t_s\) verifies :&lt;/p&gt;
+
+\[|t_s| &amp;gt; \phi_{S-1}^{-1}(1-\epsilon), \quad \phi_{S-1}: \text{ cdf of Student}(S-1)\]
+
+    &lt;p&gt;which is the condition for which the null hypothesis
+\(\Lambda_N(\theta,\theta^*) = \psi(u,\theta,\theta^*)\) is
+rejected (in a Student t-test with significance \(\epsilon\)).
+Therefore, we need to have&lt;/p&gt;
+
+\[\delta_s:=1-\phi_{S-1}(|t_s|)&amp;lt;\epsilon\]
+
+    &lt;p&gt;Samples are added
+to \(\boldsymbol x_s\) as long as this condition in not verified.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Decide \(\Lambda_N(\theta,\theta^*)&amp;gt;\psi(u,\theta,\theta^*)\)
+if \(\Lambda_s(\theta,\theta^*)&amp;gt;\psi(u,\theta,\theta^*)\), and
+\(\Lambda_N(\theta,\theta^*)&amp;lt;\psi(u,\theta,\theta^*)\)
+otherwise.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;concentration-inequalities&quot;&gt;Concentration inequalities&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;For \(\epsilon &amp;gt;0\), the idea is to &quot;locate&quot;
+\(\Lambda_N(\theta,\theta^*)\) around \(\Lambda_s(\theta,\theta^*)\)
+with probability \(1-\epsilon\), i.e. compute \((S,c_s(\epsilon))\)
+such that :&lt;/li&gt;
+&lt;/ul&gt;
+
+\[\mathbb{P}\big(\vert\Lambda_s(\theta,\theta^*)-\Lambda_N(\theta,\theta^*)\vert\le c_s(\epsilon)\big)\ge 1-\epsilon\]
+
+&lt;p&gt;Then, with probability \(1-\epsilon\), we have the following
+confidence interval :&lt;/p&gt;
+
+\[\Lambda_s(\theta,\theta^*)-c_s(\epsilon)\le\Lambda_N(\theta,\theta^*)\le \Lambda_s(\theta,\theta^*)+c_s(\epsilon)\]
+
+&lt;p&gt;which gives a way to check whether
+\(\Lambda_N(\theta,\theta^*)&amp;gt;\psi(u,\theta,\theta^*)\).&lt;/p&gt;
+
+&lt;p&gt;In fact, the sample size \(S\) is chosen so that the size
+\(c_s(\epsilon)\) of the confidence interval/concentration is
+smaller than the difference
+\(|\Lambda_s(\theta,\theta^*)-\psi(u,\theta,\theta^*)|\). In the
+case of sampling without replacement, \(c_s(\epsilon)\) can be
+shown to depend (linearly) on the sample standard deviation and
+the value of the sample with the largest magnitude.&lt;/p&gt;
+
+&lt;p&gt;A way to decrease this term without adding an excessive number
+of samples is to use proxy functions
+\(\lbrace\rho_i(\theta,\theta^*), i\in [\![1,N]\!]\rbrace\)
+verifying:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;for all \(i\in [\![1,n]\!]\), \(\rho_i(\theta,\theta^*)\approx \log\frac{\pi(x_i\vert \theta^*)}{\pi(x_i\vert \theta)}\)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;\(\sum\limits_{i=1}^N  \rho_i(\theta,\theta^*)\) is easily
+  computable&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;\(\left\lbrace \left\vert\rho_i(\theta,\theta^*)- \log\frac{\pi(x_i\vert \theta^*)}{\pi(x_i\vert \theta)}\right\vert, i\in [\![1,n]\!]\right\rbrace\) can easily be bounded&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In that case, the acceptance decision is equivalent to checking whether&lt;/p&gt;
+
+\[\frac{1}{N}\sum\limits_{i=1}^N \left[\log\frac{\pi(x_i\vert \theta^*)}{\pi(x_i\vert \theta)}-\rho_i(\theta,\theta^*)\right] &amp;gt; \tilde\psi(u,\theta,\theta^*)=\psi(u,\theta,\theta^*)-\sum\limits_{i=1}^N  \rho_i(\theta,\theta^*)\]
+
+&lt;p&gt;And therefore the same subsampling reasoning can be applied to the population&lt;/p&gt;
+
+\[\left\lbrace\log\frac{\pi(x_i\vert \theta^*)}{\pi(x_i\vert \theta)}-\rho_i(\theta,\theta^*), i\in [\![1,n]\!] \right\rbrace\]
+
+&lt;p&gt;which by construction will give rise to smaller values of
+concentration sizes \(c_s(\epsilon)\). An example of such proxy
+functions are Taylor expansions of the log-likelihood function
+\((x,\theta) \mapsto \log \pi(x \vert \theta)\).&lt;/p&gt;
+
+&lt;h3 id=&quot;number-of-calls&quot;&gt;Number of calls&lt;/h3&gt;
+
+&lt;p&gt;In the original algorithm, at each iteration \(k+1\), given the current
+value of the parameters \(\theta_k\) and a proposal \(\theta^*\), we need to compute&lt;/p&gt;
+
+\[\Lambda_N(\theta_k,\theta^*)=\underbrace{\frac{1}{\vert \boldsymbol x\vert}\sum\limits_{x\in\boldsymbol x}\log\pi(x\vert \theta^*)}_{\text{not computed yet}} -\underbrace{\frac{1}{\vert \boldsymbol x\vert}\sum\limits_{x\in\boldsymbol x}\log\pi(x\vert \theta_k)}_{\text{computed at iteration }k}\]
+
+&lt;p&gt;Therefore \(N\) calls to the log-likelihood function
+\((x,\theta) \mapsto \log \pi(x \vert \theta)\) are needed at each
+iteration.&lt;br /&gt;
+With these new subsampling approaches, the samples sizes (and the sample
+themseleves) change from one iteration to the other. So the quantity to
+compute at iteration \(k+1\) is&lt;/p&gt;
+
+\[\Lambda_s(\theta_k,\theta^*)=\underbrace{\frac{1}{\vert \boldsymbol x_s\vert}\sum\limits_{x\in\boldsymbol x_s}\log\pi(x\vert \theta^*)}_{\text{not computed yet}} -\underbrace{\frac{1}{\vert \boldsymbol x_s\vert}\sum\limits_{x\in\boldsymbol x_s}\log\pi(x\vert \theta_k)}_{\text{may be diffrent than iteration }k}\]
+
+&lt;p&gt;Therefore, in general, \(2S\) calls to the log-likelihood function
+\((x,\theta) \mapsto \log \pi(x \vert \theta)\) are needed at each
+iteration, where \(S\) varies between iterations. Hence, subsampling
+methods are interesting as long as for most (if not all) iterations, we
+have \(2S &amp;lt;&amp;lt; N\).&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Bardenet, R. (2017, December). &lt;em&gt;On Markov chain Monte Carlo for tall
+data&lt;/em&gt;. Paper presented at &quot;Journée algorithmes stochastiques&quot;,
+Université Paris Dauphine, Paris, France.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Bardenet, R., Doucet, A., Holmes, C. (2015). &lt;em&gt;On Markov chain Monte
+Carlo methods for tall data&lt;/em&gt;. arXiv preprint arXiv:1505.02827.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Korattikara, A., Chen, Y., Welling, M. (2014). &lt;em&gt;Austerity in MCMC land:
+Cutting the Metropolis-Hastings budget&lt;/em&gt;. In Proceedings of the 31st
+International Conference on Machine Learning (ICML-14) (pp. 181-189).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Minsker, S., Srivastava, S., Lin, L., Dunson, D. (2014, January).
+&lt;em&gt;Scalable and robust Bayesian inference via the median posterior&lt;/em&gt;. In
+International Conference on Machine Learning (pp. 1656-1664).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Neiswanger, W., Wang, C., Xing, E. (2013). &lt;em&gt;Asymptotically exact,
+embarrassingly parallel MCMC&lt;/em&gt;. arXiv preprint arXiv:1311.4780.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Mike Pereira</name><email>mike.pereira@minesparis.psl.eu</email></author><category term="MCMC" /><category term="Metropolis-Hastings" /><category term="Tall data" /><summary type="html">This note is an attempt to convey the main ideas and notions of the talk entitled “On Markov chain Monte Carlo and tall data” given by Rémi Bardenet (CNRS, Lille, France) during the Stochastic algorithm Day 2017 (Journée algorithmes stochastiques 2017). This conference was held at Université Paris Dauphine (Paris, France) on December 1st, 2017.</summary></entry><entry><title type="html">Sequential Monte Carlo: Introduction and advances</title><link href="http://localhost:4000/posts/2018/01/seqMC/" rel="alternate" type="text/html" title="Sequential Monte Carlo: Introduction and advances" /><published>2018-01-18T00:00:00-08:00</published><updated>2018-01-18T00:00:00-08:00</updated><id>http://localhost:4000/posts/2018/01/seqMC</id><content type="html" xml:base="http://localhost:4000/posts/2018/01/seqMC/">&lt;p&gt;This note is an attempt to convey the main ideas and notions of the talk entitled “Sequential Monte Carlo: Introduction and advances” given by Nicolas Chopin (ENSAE, Paris, France) during the Stochastic algorithm Day 2017 (&lt;em&gt;Journée algorithmes stochastiques 2017&lt;/em&gt;). This conference was held at Université Paris Dauphine (Paris, France) on December 1st, 2017.&lt;/p&gt;
+
+&lt;h2 id=&quot;feynmac-kac-models&quot;&gt;Feynmac-Kac models&lt;/h2&gt;
+
+&lt;p&gt;A Feynman-Kac model is made of :&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;a Markov chain in \(\mathcal{X}\) with
+    &lt;ul&gt;
+      &lt;li&gt;Initial law : \(dx_0\in\mathcal{X}\mapsto m_0(dx_0)\)&lt;/li&gt;
+      &lt;li&gt;Markov kernel (at iteration \(t\)) : \(dx_t \in\mathcal{X} \mapsto m_t(x_{t-1},dx_t)=\pi(x_t\vert x_{t-1})\)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;a sequence of potential functions \(G_0 : \mathcal{X} \rightarrow \mathbb{R}^+\), \(G_t : \mathcal{X}\times \mathcal{X} \rightarrow \mathbb{R}^+\)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The aim is to compute sequentially quantities of the form :&lt;/p&gt;
+
+\[\begin{aligned}\mathbb{Q}_t(\phi)=\frac{1}{Z_t}\mathbb{E}\left[ \phi(X_t)G_0(X_0)\prod\limits_{s=1}^tG_s(X_{s-1},X_s)\right]\end{aligned}\]
+
+&lt;p&gt;where&lt;/p&gt;
+
+\[\begin{aligned}
+Z_t=\mathbb{E}\left[G_0(X_0)\prod\limits_{s=1}^tG_s(X_{s-1},X_s)\right].
+\end{aligned}\]
+
+&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;
+If \(G_t(x_{t-1},x_t):=\boldsymbol{1}_{A_t}(x_t)\), then
+\(Z_t = \mathbb{P}(\forall s\le t, \; X_s\in A_s)\) and
+\(\mathbb{Q}_t = \pi(X_t \vert X_s\in A_s : s \le t)\) Notice in
+particular that&lt;/p&gt;
+
+\[\begin{aligned}
+Z_t=\int \underbrace{\left(\int G_0(x_0)\prod\limits_{s=1}^tG_s(x_{s-1},x_s)\pi(x_0,...,x_t)dx_0...dx_{t-1}\right)}_{:=p_t(x_t)}dx_t
+\end{aligned}\]
+
+\[\begin{aligned}
+\mathbb{Q}_t(\phi)&amp;amp;= \frac{1}{Z_t}\int \phi(x_t)\left(\int G_0(x_0)\prod\limits_{s=1}^tG_s(x_{s-1},x_s)\pi(x_0,...,x_t)dx_0...dx_{t-1}\right)dx_t\\
+&amp;amp;= \frac{1}{Z_t}\int \phi(x_t)p_t(x_t)dx_t=\int \phi(x_t)\underbrace{\frac{p_t(x_t)}{\int p_t(x_t)dx_t}}_{:=\mathbb{Q}_t(x_t)}dx_t=\int \phi(x_t)\mathbb{Q}_t(x_t)dx_t
+\end{aligned}\]
+
+&lt;p&gt;Then \(\mathbb{Q}_t(x_t)\) can be seen as a probability density and
+\(\mathbb{Q}_t(\phi)\) as the expectation of \(\phi(X_t)\) when
+\(X_t \sim \mathbb{Q}_t(x_t)\).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;
+Hidden Markov models&lt;/p&gt;
+
+&lt;p&gt;Imagine that the Markov chain \((X_t)\) is observed through&lt;/p&gt;
+
+\[\begin{aligned}
+Y_t=h(X_t)+\text{ noise }
+\end{aligned}\]
+
+&lt;p&gt;and take \(G_t(x_{t-1},x_t)=\pi(y_t\vert x_t)\) the density of \(Y_t\) conditional on \(X_t=x_t\). Then,&lt;/p&gt;
+
+\[\begin{aligned}
+p_t(x_t)&amp;amp;=\int \prod_{s=0}^t \pi(y_s\vert x_s\pi(x_0,...,x_t)dx_0...dx_{t-1}\\
+&amp;amp;=\int\pi(y_0,...,y_t,x_0,...,x_t)dx_0...dx_{t-1}=\pi(y_0,...,y_t,x_t)
+\end{aligned}\]
+
+&lt;p&gt;And therefore&lt;/p&gt;
+
+\[\begin{aligned}
+Z_t=\int \pi(y_0,...,y_t,x_t)dx_t=\pi(y_0,...,y_t)
+\end{aligned}\]
+
+&lt;p&gt;is the likelihood of the observations and&lt;/p&gt;
+
+\[\begin{aligned}
+\mathbb{Q}_t(x_t)=\pi(y_0,...,y_t,x_t)/\pi(y_0,...,y_t)=\pi(x_t\vert y_0,...,y_t)
+\end{aligned}\]
+
+&lt;p&gt;is the law of \(X_t\) conditional on the observations.&lt;/p&gt;
+
+&lt;h2 id=&quot;particle-filtering&quot;&gt;Particle Filtering&lt;/h2&gt;
+
+&lt;p&gt;Particle filtering is used to approximate the probability measure
+\(\mathbb{Q}_t\) sequentially&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Initialization : \(t=0\)&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;Generate \(N\) samples from \(m_0(dx_0)\) :
+\(X_0^{(i)} \sim m_0(dx_0) : i\in[\![1,N]\!]\)&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;Compute initial weights :
+\(W_0^{(i)} =G_0(X_0^{(i)} )/\sum\limits_{j=1}^N G_0(X_0^{(j)} ) : i\in[\![1,N]\!]\)&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;For time \(t&amp;gt;0\) :&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;Do for \(i\in [\![1,N]\!]\) :&lt;/p&gt;
+
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;p&gt;Draw an index \(A_{t-1}^{i}\) from \([\![1,N]\!]\) with
+probabilities
+\(\mathbb{P}\left(A_{t-1}^{i}=k\right)\propto W_{t-1}^{(k)}\)&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;Generate
+\(X_t^{(i)} \sim m_t\left(X_{t-1}^{\left(A_{t-1}^{i}\right)}, dx_t\right)\)&lt;/p&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;Compute the new weights :
+\(W_t^{(i)} =G_t(X_{t-1}^{\left(A_{t-1}^{i}\right)},X_t^{(i)} )/\sum\limits_{j=1}^N G_t(X_{t-1}^{\left(A_{t-1}^{j}\right)},X_t^{(j)} )\)&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The quantities of interest are computed using&lt;/p&gt;
+
+\[\begin{aligned}
+\mathbb{Q}_t^N(\phi)=\sum\limits_{i=1}^N W_t^{(i)}\phi(X_t^{(i)}) \approx \mathbb{Q}_t(\phi)
+\end{aligned}\]
+
+&lt;p&gt;and&lt;/p&gt;
+
+\[\begin{aligned}
+Z_t^N=\prod\limits_{s=0}^t\left[\frac{1}{N}\sum\limits_{i=1}^N G_t(X_{t-1}^{\left(A_{t-1}^{i}\right)},X_t^{(i)} ) \right]\approx Z_t
+\end{aligned}\]
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/seqMC/part_schema.png&quot; /&gt;
+  &lt;figcaption&gt;Particle filtering in a sketch.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;In this particle filter formulation, the particles are generated using
+the kernel \(m_t(x_{t-1},dx_t)\). In practice, this generating kernel
+doesn’t have to match the kernel \(f_t(x_{t-1},dx_t)\) of the Markov chain
+of interest, but when it is the case, the corresponding PF is called a
+bootstrap filter.&lt;/p&gt;
+
+&lt;p&gt;In particular, in the Hidden Markov models, if \(f_t\) is the Markov
+kernel of the underlying process \((X_t)\) then, for any kernel \(m_t\), if
+the potential functions are of the form&lt;/p&gt;
+
+\[\begin{aligned}
+G_0(x_0)=\frac{f_0(x_0)\pi(y_0\vert x_0)}{m_0(x_0)} \;,  \quad G_t(x_{t-1},x_t)=\frac{f_t(x_{t-1},dx_t)\pi(y_t\vert x_t)}{m_t(x_{t-1},dx_t)}
+\end{aligned}\]
+
+&lt;p&gt;then \(\mathbb{Q}_t\) will still match the filtering
+distribution, i.e. the law of \(X_t\) conditional to the data.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Proof.&lt;/em&gt; For a Markov chain \((X_t)\) with kernel \(f_t\) :&lt;/p&gt;
+
+\[\begin{aligned}
+\pi(x_0,...,x_t)=\pi(x_0)\prod\limits_{s=1}^t\pi(x_s\vert x_{s-1})=f_0(x_0)\prod\limits_{s=1}^t f_s(x_{s-1},dx_s)
+\end{aligned}\]
+
+&lt;p&gt;Then, the Feynman-Kac model with Markov chain \((\tilde X_t)\) with kernel
+\(m_t\) and potential functions \(G_t\) defined above
+verifies&lt;/p&gt;
+
+\[\begin{aligned}
+\tilde p_t(\tilde X_t=\tilde x_t)&amp;amp;=\int \frac{f_0(\tilde x_0)\pi(y_0 \vert \tilde x_0)}{m_0(\tilde x_0)}\prod_{s=1}^t \frac{f_s(\tilde x_{s-1},d\tilde x_s)\pi(y_s\vert \tilde x_s)}{m_s(\tilde x_{s-1},d\tilde x_s)}\pi(\tilde x_0,...,\tilde x_t)d\tilde x_0...d\tilde x_{t-1}\\
+&amp;amp;= \int f_0(\tilde x_0)\pi(y_0 \vert \tilde x_0)\prod_{s=1}^t f_s(\tilde x_{s-1},d\tilde x_s)\pi(y_s\vert \tilde x_s)d\tilde x_0...d\tilde x_{t-1}\\
+&amp;amp;= \int \pi(x_0,...,x_t)\prod_{s=0}^t \pi(y_s\vert x_s)dx_0...d x_{t-1} \\
+&amp;amp;= \int \pi(x_0,...,x_t) \pi(y_0,...,y_t\vert x_0,..., x_t)dx_0...d x_{t-1}\\
+&amp;amp;=\int\pi(y_0,...,y_t,x_0,...,x_t)dx_0...dx_{t-1} \\
+&amp;amp;=\pi(y_0,...,y_t,x_t)=p_t(X_t=x_t)
+\end{aligned}\]
+
+&lt;p&gt;Therefore the probability \(\tilde{\mathbb{Q}}_t\) associated with the
+chain \((\tilde X_t)\) is exactly the filtering distribution of the
+underlying process \((X_t)\). ◻&lt;/p&gt;
+
+&lt;p&gt;The generating kernel \(m_t\) is chosen to minimize the variance of \(G_t\): the optimal choice is then the distribution of \(X_t\) conditional to
+\(X_{t-1}\) and \(Y_t\) (intractable in general…).&lt;/p&gt;
+
+&lt;h2 id=&quot;resampling&quot;&gt;Resampling&lt;/h2&gt;
+
+&lt;p&gt;Resampling is the process that takes as an input a weighted sample
+\(\lbrace (X^{(i)},W^{(i)})\rbrace_{i\in[\![1,N]\!]}\) and returns
+resampled variables \(\lbrace X^{(A^i)} \rbrace_{i\in[\![1,N]\!]}\) where
+\(A^i\) is a random index in \([\![1,N]\!]\). A good resampling scheme
+guarantees&lt;/p&gt;
+
+\[\begin{aligned}
+\frac{1}{N}\sum\limits_{i=1}^N\delta(X^{(A^i)})\approx \sum\limits_{i=1}^N W^n\delta(X^{(i)})
+\label{GS}
+\end{aligned}\]
+
+&lt;p&gt;i.e. the empirical probability measure of the resampled
+variables is close to the weighted empirical measure of the input
+variables.&lt;/p&gt;
+
+&lt;p&gt;Denote
+\(F_N : x\in\mathbb{R}_+ \mapsto \sum\limits_{i=1}^N W^{(i)}\boldsymbol{1}(x\ge i)\in[0,1]\)
+the cumulative distribution function associated with the normalized
+weights \((W^{(i)})\). Three common resampling schemes are described
+below.&lt;/p&gt;
+
+&lt;h3 id=&quot;multinomial-resampling&quot;&gt;Multinomial resampling&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;For \(i\in [\![1,N]\!]\) :&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;Draw \(U^{(i)}\sim \mathcal{U}(0,1)\)&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;Return \(A^i=F^{-1}_N(U^{i})\)&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;stratified-resampling&quot;&gt;Stratified resampling&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;For \(i\in [\![1,N]\!]\) :&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;Draw \(U^{(i)}\sim \mathcal{U}(0,1)\)&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;Return \(A^i=F^{-1}_N(\frac{i-1+U^{i}}{N} )\)&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;systematic-resampling&quot;&gt;Systematic resampling&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Draw \(U\sim \mathcal{U}(0,1)\)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;For \(i\in [\![1,N]\!]\) :&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;Return \(A^i=F^{-1}_N(\frac{i-1+U}{N} )\)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/seqMC/inv_cdf.png&quot; /&gt;
+  &lt;figcaption&gt;Example of inverse cumulative distribution $F_N$, $N=4$.
+$\lbrace U^{(k)}, 1\le k\le 3\rbrace$ are samples drawn using
+multinomial resampling.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Stratified and systematic resampling are used in practice because they
+are a bit faster and lead to lower variance estimates numerically. But
+for theory, multinomial resampling is preferred as it is easier to study
+and constitutes a good sampler in the sense described at the beginning of this section. Hence, little
+theoretical background is provided for stratified and systematic
+sampling, regarding for instance their consistency.&lt;/p&gt;
+
+&lt;h2 id=&quot;consistency-results&quot;&gt;Consistency results&lt;/h2&gt;
+
+&lt;p&gt;A resampling scheme is consistent if it preserves weak convergence. A
+theorem states that an unbiased resampling scheme is consistent if the
+collection of variables&lt;/p&gt;
+
+\[\begin{aligned}
+\left\lbrace \#^i:=\sum\limits_{j=1}^N\boldsymbol{1}(A^j=i)=\text{Card}\lbrace j\in[\![1,N]\!] : A^j=i\rbrace \right\rbrace_{i\in[\![1,N]\!]}
+\end{aligned}\]
+
+&lt;p&gt;is negatively associated, i.e., for every pair of disjoint subsets
+\(I_1,I_2 \subset [\![1,N]\!]\),&lt;/p&gt;
+
+\[\begin{aligned}\text{Cov}\left(\varphi_1(\lbrace \#^i : i\in I_1\rbrace), \varphi_2(\lbrace \#^i : i\in I_2\rbrace)\right)\le 0
+\end{aligned}\]
+
+&lt;p&gt;for all non-decreasing functions
+\(\varphi_k : \mathbb{R}^{|I_k|}\rightarrow \mathbb{R}\),
+\(k\in\lbrace 1,2\rbrace\), such that the covariance is well-defined.&lt;br /&gt;
+This theorem is used to demonstrate that multinomial and residual
+resampling are consistent (which was a known fact) but also stratified
+and SSP resampling (which is a new fact). However, the theorem can’t be
+applied to systematic resampling.&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Nicolas Chopin (2017, December). &lt;em&gt;Sequential Monte Carlo: introduction,
+recent advances&lt;/em&gt;. Paper presented at &quot;Journée algorithmes
+stochastiques&quot;, Université Paris Dauphine, Paris, France&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Mike Pereira</name><email>mike.pereira@minesparis.psl.eu</email></author><category term="Sequential Monte Carlo" /><category term="Feynmac-Kac" /><category term="Particle filtering" /><summary type="html">This note is an attempt to convey the main ideas and notions of the talk entitled “Sequential Monte Carlo: Introduction and advances” given by Nicolas Chopin (ENSAE, Paris, France) during the Stochastic algorithm Day 2017 (Journée algorithmes stochastiques 2017). This conference was held at Université Paris Dauphine (Paris, France) on December 1st, 2017.</summary></entry><entry><title type="html">Stochastic algorithms in Machine Learning</title><link href="http://localhost:4000/posts/2018/01/stoML/" rel="alternate" type="text/html" title="Stochastic algorithms in Machine Learning" /><published>2018-01-18T00:00:00-08:00</published><updated>2018-01-18T00:00:00-08:00</updated><id>http://localhost:4000/posts/2018/01/stoML</id><content type="html" xml:base="http://localhost:4000/posts/2018/01/stoML/">&lt;p&gt;This note is an attempt to convey the main ideas and notions of the talk entitled “Stochastic algorithms in Machine Learning” given by Aymeric Dieuleveut (EPFL, Lausanne, Switzerland) during the Stochastic algorithm Day 2017 (&lt;em&gt;Journée algorithmes stochastiques 2017&lt;/em&gt;). This conference was held at Université Paris Dauphine (Paris, France) on December 1st, 2017.&lt;/p&gt;
+
+&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;The goal of supervised Machine Learning algorithms is to predict the
+values of some unknown variable from known explanatory variables, given
+a set of observations. Contrary to purely statistical algorithms, no
+model has to be specified to the algorithm. In many applications, both
+the number of observations \(n\) and the number of explanatory variables
+\(d\) can be large. Stochastic algorithms are used in such large scale
+frameworks to make prediction tractable.&lt;/p&gt;
+
+&lt;h2 id=&quot;supervised-machine-learning&quot;&gt;Supervised Machine Learning&lt;/h2&gt;
+
+&lt;p&gt;Consider an input/output pair \((X,Y)\in\mathcal{X}\times\mathcal{Y}\),
+\(\mathcal{Y}\subset \mathbb{R}\), with unknown joint distribution
+\(\rho\).
+The goal is to find a function
+\(\theta : \mathcal{X} \rightarrow \mathbb{R}\) such that \(\theta(X)\) is a
+good prediction for \(Y\). To do so, we consider a loss function
+\(l : \mathcal{Y}\times \mathbb{R} \rightarrow \mathbb{R}_+\) such that
+\(l(y,\theta(x))\) is the loss from predicting \(y\) using \(\theta(x)\).&lt;/p&gt;
+
+&lt;p&gt;The Generalization risk (or true risk) is defined as&lt;/p&gt;
+
+\[\begin{aligned}
+\mathcal{R}(\theta):=\mathbb{E}_\rho[l(Y, \theta(X))]
+\end{aligned}\]
+
+&lt;p&gt;and is a measure of the quality of \(\theta(X)\) as a predictor of \(Y\). Given that \(\rho\)
+is unknown, we can’t in general compute directly this risk.&lt;/p&gt;
+
+&lt;p&gt;Starting from a set of \(n\) observations
+\((x_i,y_i)\in\mathcal{X}\times \mathcal{Y}\), \(i\in[\![1,n]\!]\) assumed
+to be i.i.d. with (unknown) distribution \(\rho\), the Empirical risk (or
+training error) is defined as&lt;/p&gt;
+
+\[\begin{aligned}
+\widehat{\mathcal{R}}(\theta)=\frac{1}{n}\sum\limits_{i=1}^nl(y_i,\theta(x_i))
+\end{aligned}\]
+
+&lt;p&gt;and is used in practice to choose the best predictor \(\theta\),
+considering the observations and some regularisation factor
+\(\Omega(\theta)\), through the Empirical Risk Minimisation (ERM) problem
+:&lt;/p&gt;
+
+\[\begin{aligned}
+\theta^* = \min\limits_\theta \left[\widehat{\mathcal{R}}(\theta) + \mu\Omega(\theta)\right]=\min\limits_\theta \left[\frac{1}{n}\sum\limits_{i=1}^nl(y_i,\theta(x_i)) + \mu\Omega(\theta)\right]
+\end{aligned}\]
+
+&lt;p&gt;From now on, linear functions are considered. We reparametrize :&lt;/p&gt;
+
+\[\begin{aligned}
+\theta(X) = \langle \theta, \Phi(X) \rangle, \quad \theta\in\mathbb{R}^d,\quad \Phi : \mathcal{X}\rightarrow \mathbb{R}^d
+\end{aligned}\]
+
+&lt;p&gt;The high number of explanatory variables \(d\) pushes us to choose first
+order algorithm for the ERM, namely the Gradient Descent algorithm. For
+instance, choosing second order algorithms such as the Newton-Raphson
+algorithm, would imply to compute a \(d\times d\) matrix at each
+iteration: the Hessian of the overall loss.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/stoML/alg1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Each iteration implies \(\mathcal{O}(dn)\) operations for the computation
+of the Gradient. Stochastic algorithms are used to reduce this number.
+In particular, the Stochastic Gradient algorithm only implies
+\(\mathcal{O}(d)\) operations per iteration.&lt;/p&gt;
+
+&lt;h2 id=&quot;stochastic-gradient-descent&quot;&gt;Stochastic Gradient descent&lt;/h2&gt;
+
+&lt;p&gt;The idea of Stochastic Gradient Descent (SGD) is to replace, at each
+iteration \(k\), the gradient of the empirical risk
+\(\nabla\widehat{\mathcal{R}}(\theta^{(k-1)})\) by a gradient function
+\(g^{(k)}(\theta^{(k-1)})\) cheaper to compute and verifying :&lt;/p&gt;
+
+\[\begin{equation}
+\mathbb{E}[g^{(k)}(\theta^{(k-1)})\vert \mathcal{F}_{k-1} ]=\nabla\widehat{\mathcal{R}}(\theta^{(k-1)})
+\tag{1}\label{SGD_origin}
+\end{equation}\]
+
+&lt;p&gt;for a filtration \((\mathcal{F}_{k})_{k\ge 0}\) such
+that \(\theta^{(k)}\) is \(\mathcal{F}_k\)-measurable.&lt;/p&gt;
+
+&lt;p&gt;Notice that the empirical risk can be written :&lt;/p&gt;
+
+\[\begin{aligned}
+\widehat{\mathcal{R}}(\theta)=\frac{1}{n}\sum\limits_{i=1}^nf_i(\theta), \quad f_i : \theta \mapsto l(y_i,\theta(x_i))
+\end{aligned}\]
+
+&lt;p&gt;Consider the filtration
+\(\mathcal{F}_k=\sigma\left((x_i,y_i)_{1\le i \le n}, (i_j)_{0\le j \le k}\right)\)
+where \((i_j)_{j \ge 0}\) are independent indices uniformly sampled from
+\([\![1,n]\!]\). It can be shown that \(g^{(k)}:=\nabla{f_{i_k}}\) verifies \eqref{SGD_origin}. The SGD algorithm is then described below.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/stoML/alg2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To reduce noise effect due to the proxy used for the gradient
+computation step, we may take the average of all states \(\theta^{(k)}\)
+as an estimator of the optimum, instead of just last one. This average
+\(\bar\theta^{(k)}\) may be computed &quot;on line&quot;, meaning that it can be
+updated at each iteration without requiring the storage of all previous
+states.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/stoML/alg3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Assume the following properties for the loss function \(l\) :&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;\(l\) is \(L\)-smooth, i.e. \(L\) is a lower bound of the eigenvalues of
+the Hessian matrix of \(l\) at any point&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;\(l\) is \(\mu\)-strongly convex, i.e. \(\mu\) is a upper bound of the
+eigenvalues of the Hessian matrix of \(l\) at any point&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In particular, at any points of evaluation \((u,v)\), \(l\) verifies :&lt;/p&gt;
+
+\[\begin{aligned}
+\langle \nabla l(v), u-v\rangle + \mu\Vert u-v\Vert^2 \le l(u)-l(v) \le \langle \nabla l(v), u-v\rangle + L\Vert u-v\Vert^2
+\end{aligned}\]
+
+&lt;p&gt;With some additional assumptions on the observations \(\Phi(x_i)\)
+(bounded variance and invertible experimental covariance matrix), it can
+be shown that then empirical risk also verifies those two properties.\&lt;/p&gt;
+
+&lt;h3 id=&quot;importance-of-the-learning-rate-gamma_k&quot;&gt;Importance of the learning rate \(\gamma_k\)&lt;/h3&gt;
+
+&lt;p&gt;For smooth and convex problems, it was shown that almost surely,
+\(\theta_k \rightarrow \theta^*\) if&lt;/p&gt;
+
+\[\begin{aligned}
+\sum\limits_{k=1}^\infty \gamma_k =\infty \quad \sum\limits_{k=1}^\infty \gamma_k^2 =\infty
+\end{aligned}\]
+
+&lt;p&gt;and asymptotically, for
+\(\gamma_k =\frac{\gamma_0}{k}, \gamma_0 \ge \frac{1}{\mu}\),
+\(\sqrt{k}(\theta_k - \theta^*) \mathop{\rightarrow}\limits^d \mathcal{N}(0,V)\).&lt;/p&gt;
+
+&lt;h3 id=&quot;comparison-of-convergence-rate&quot;&gt;Comparison of convergence rate&lt;/h3&gt;
+
+&lt;p&gt;The convergence rate of an optimization algorithm measures the speed of
+convergence of torwards the solution of the problem. It is, with our
+notations, given by the speed at which
+\((\widehat{\mathcal{R}}(\theta^{(k)}))_{k\ge 0}\) converges to the
+minimum of \(\widehat{\mathcal{R}}\). Let’s compare the convergence rate
+of GD and (A)SGD for both convex and strongly convex functions.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/stoML/table.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;One one hand, GD can converge much master to the optimum \(\theta^*\) than
+SGD. But on the other hand, each iteration of GD is more costly (by a
+factor \(n\)) than an iteration of SGD. The idea is to come up with a way
+to get the best of both worlds.&lt;/p&gt;
+
+&lt;h2 id=&quot;stochastic-average-gradient&quot;&gt;Stochastic Average Gradient&lt;/h2&gt;
+
+&lt;p&gt;The Stochastic Average Gradient algorithm, is a SGD algorithm in which
+the at each iteration, the full gradient \(g^{(k)}\) given by&lt;/p&gt;
+
+\[\begin{aligned}
+g^{(k)}=\frac{1}{n}\sum\limits_{i=1}^n\nabla f_i(\theta^{(k_i)}), \quad k_i\in[\![0,k]\!]
+\end{aligned}\]
+
+&lt;p&gt;is updated through \(i_k\)-th term of the sum, where \(i_k\) is once again
+an index randomly chosen at each iteration. The term
+\(\nabla f_{i_k}(\theta^{(k_{i_k})})\) is replaced by
+\(\nabla f_{i_k}(\theta^{(k)})\) in the sum, where
+\((\theta^{(k)})_{k\ge 0}\) are obtained through a GD iteration step in
+which the gradient is replaced by \(g^{(k)}\).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/stoML/alg4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This algorithm has the same update cost as SGD but the averaged gradient
+\(g^{(k)}\) has a smaller variance than the gradient used in SGD.
+Moreover, choosing a constant step size \(\gamma_k=\frac{1}{2nL}\) yields
+a convergence rate of \(\mathcal{O}((1- \frac{1}{8Ln})^k)\). However, it
+is required to store at all time \(n\) elementary gradients
+\(\nabla f_i(\theta^{(k_i)})\) as one of them is systematically used in
+the updating step of \(g^{(k)}\).&lt;/p&gt;
+
+&lt;h2 id=&quot;generalization-risk&quot;&gt;Generalization risk&lt;/h2&gt;
+
+&lt;p&gt;Using the Empirical risk to determine the best predictor \(\theta^*\)
+given the data arises several problems. First, to avoid over-fitting, a
+regularisation function must be set. Then, the number of iterations
+needed to achieve the optimum is hard to predict.&lt;/p&gt;
+
+&lt;p&gt;On the other hand, using Generalisation risk yields a more general
+approach given that it measures how accurately we may predict outcome
+values for previously unseen data (through the expectation). Therefore,
+regularisation is no longer needed. As we may see now, SGD can be used
+to minimise the generalisation risk, even though its expression is
+unknown.&lt;/p&gt;
+
+&lt;p&gt;SGD would replace computations of the gradient of the Generalisation
+risk \(\nabla\mathcal{R}(\theta^{(k-1)})\) by a proxy
+\(g^{(k)}(\theta^{(k-1)})\) verifying :&lt;/p&gt;
+
+\[\begin{equation}
+\mathbb{E}[g^{(k)}(\theta^{(k-1)})\vert \mathcal{F}_{k-1} ]=\nabla{\mathcal{R}}(\theta^{(k-1)})=\mathbb{E}_\rho[\nabla l(Y, \langle\theta^{(k-1)}, \Phi(X)\rangle)]
+\tag{2}\label{SGD_origin_GR}
+\end{equation}\]
+
+&lt;p&gt;Considering that the examples
+\((x_i,y_i)_{1\le i \le n}\) are i.i.d from \(\rho\), we can take for
+\(g^{(k)}\) at iteration \(1\le k \le n\):&lt;/p&gt;
+
+\[\begin{aligned}
+g^{(k)}(\theta^{(k-1)})=\nabla l(y_k, \langle\theta^{(k-1)}, \Phi(x_k)\rangle)
+\end{aligned}\]
+
+&lt;p&gt;and the filtrations
+\(\mathcal{F}_{k-1}=\sigma((x_i,y_i)_{1\le i \le k})\). Therefore there is
+a single pass through the data in this algorithm, and exactly \(n\)
+iterations are needed. Hence, with a convex (resp. strongly convex) loss
+function and a constant step size, it has a convergence rate of
+\(\mathcal{O}(1/\sqrt{n})\) (resp. \(\mathcal{O}(1/(\mu n))\)).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/stoML/alg5.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;beyond-least-squares-for-generalisation-risk--sgd-as-a-markov-chain&quot;&gt;Beyond Least squares for Generalisation risk : SGD as a Markov chain&lt;/h2&gt;
+
+&lt;p&gt;All the convergence rates previously mentioned are related to the use of
+a quadratic loss function
+\((x,y) \mapsto l(x,\theta(x))=(y-\theta^T\Phi(x))^2\). When using other
+loss functions, the results don’t hold, and the SGD may even not
+converge! For instance, for the logistic loss
+\((x,y) \mapsto l(x,\theta(x))=\log\left(1+\exp(y-\theta^T\Phi(x))\right)\)
+averaged SGD with constant step size \(\gamma\) happened to yield
+convergence rates of
+\(\mathbb{E}[\bar\theta^{(k)}-\theta^*]=\mathcal{O}(\gamma)\) (therefore
+independent of the number of iterations...).&lt;/p&gt;
+
+&lt;p&gt;To understand this problem and come up with solutions, SGD (with
+constant step size) was formulated as an homogeneous Markov chain.&lt;/p&gt;
+
+&lt;p&gt;Consider a \(L\)-smooth and \(\mu\)-strongly convex risk \(\mathcal{R}\). Then
+SGD with a step size \(\gamma\) may be seen as the generation of a
+sequence \((\theta^{(k)}_\gamma)_{k\ge 0}\) with recurrence :&lt;/p&gt;
+
+\[\begin{aligned}
+\theta^{(k)}_\gamma=\theta^{(k-1)}_\gamma-\gamma\underbrace{\left(\nabla\mathcal{R}(\theta^{(k-1)}_\gamma)+\varepsilon^{(k)}(\theta^{(k-1)}_\gamma) \right)}_{=g^{(k)}(\theta^{(k-1)}_\gamma)}
+\end{aligned}\]
+
+&lt;p&gt;where \((\varepsilon^{(k)})_{k\ge 0}\) are i.i.d. random noises verifying
+for any \(\theta\),
+\(\mathbb{E}[\varepsilon^{(k)}(\theta)\vert \mathcal{F}_{k-1}]=0\) for the
+same filtrations as in \eqref{SGD_origin_GR}. Introduced like this,
+\((\theta^{(k)}_\gamma)_{k\ge 0}\) is a homogeneous Markov chain, which
+allow us to understand the general behaviour of the SGD.&lt;/p&gt;
+
+&lt;p&gt;Indeed, this Markov chain will converge exponentially fast to its
+(unique) stationary distribution \(\pi_\gamma\). Consequently, this
+sequence (and therefore the SGD) does not converge to a point, but
+rather will (asymptotically) oscillate around the mean
+\(\bar\theta_\gamma = \mathbb{E}_{\pi_\gamma}[\theta]\) with an average
+magnitude \(\gamma^{1/2}\). On the other hand, considering as an output
+the average \(\bar\theta^{(k)}_\gamma\) of the \(k+1\) states
+\(\lbrace\theta^{(i)} :0\le  i \le k \rbrace\), we can prove (central
+limit theorem) that with rate \(\mathcal{O}(1/\sqrt{k})\) :&lt;/p&gt;
+
+\[\begin{aligned}
+\bar\theta^{(k)}_\gamma \mathop{\rightarrow}\limits_{k\rightarrow \infty}^{L^2} \bar\theta_\gamma = \mathbb{E}_{\pi_\gamma}[\theta]
+\end{aligned}\]
+
+&lt;p&gt;Therefore the output of the averaged SGD is known to converge at a given
+rate to \(\bar\theta_\gamma\), which may different than the optimum
+\(\theta^*\). The error between the output of the SGD
+\(\theta^{(k)}_\gamma\) and the optimum can be decomposed:&lt;/p&gt;
+
+\[\begin{aligned}\theta^{(k)}_\gamma-\theta^*=\underbrace{\theta^{(k)}_\gamma-\bar\theta_\gamma}_{\mathcal{O}(1/\sqrt{k})}+\underbrace{\bar\theta_\gamma - \theta^*}_{\text{independent of k}}
+\end{aligned}\]
+
+&lt;p&gt;Notice that if we take \(\theta^{(0)}_\gamma \sim \pi_\gamma\), then by
+definition of \(\pi_\gamma\),&lt;/p&gt;
+
+\[\begin{aligned}
+\theta^{(0)}_\gamma -\gamma\left(\nabla\mathcal{R}(\theta^{(0)}_\gamma)+\varepsilon^{(1)}(\theta^{(0)}_\gamma) \right)=\theta^{(1)}_\gamma  \sim \pi_\gamma
+\end{aligned}\]
+
+&lt;p&gt;Hence, by taking the expectation under \(\pi_\gamma\) we get :&lt;/p&gt;
+
+\[\begin{aligned}
+\mathbb{E}_{\pi_\gamma}[\nabla\mathcal{R}(\theta^{(0)}_\gamma)]=0
+\end{aligned}\]
+
+&lt;p&gt;and recalling the expression of \(\mathcal{R}\) we get&lt;/p&gt;
+
+\[\begin{aligned}
+\mathbb{E}_{\pi_\gamma}[\nabla\mathcal{R}(\theta)]=\mathbb{E}_{\pi_\gamma}\left[\mathbb{E}_\rho[\nabla l(Y, \Phi(X)^T\theta)]\right]=\mathbb{E}_\rho\left[\mathbb{E}_{\pi_\gamma}[\nabla l(Y, \Phi(X)^T\theta)]\right]=0
+\end{aligned}\]
+
+&lt;p&gt;In particular, in the quadratic loss case, given that
+\(\theta \mapsto \nabla l(Y, \Phi(X)^T\theta)=2(Y-\Phi(X)^T\theta)\Phi(X)\)
+is a linear function of \(\theta\), we have&lt;/p&gt;
+
+\[\begin{aligned}
+\mathbb{E}_\rho\left[\mathbb{E}_{\pi_\gamma}[\nabla l(Y, \Phi(X)^T\theta)]\right]=\mathbb{E}_\rho\left[\nabla l(Y, \Phi(X)^T\mathbb{E}_{\pi_\gamma}[\theta])\right]=\nabla\mathcal{R}(\mathbb{E}_{\pi_\gamma}[\theta])=0
+\end{aligned}\]
+
+&lt;p&gt;And therefore,&lt;/p&gt;
+
+\[\begin{aligned}
+\bar\theta_\gamma = \mathbb{E}_{\pi_\gamma}[\theta]=\theta^*.
+\end{aligned}\]
+
+&lt;p&gt;We retrieve the fact that in the quadratic loss case, the averaged SGD
+converges to the optimum at rate \(\mathcal{O}(1/\sqrt{k})\).&lt;/p&gt;
+
+&lt;p&gt;However, in the general case, using a Taylor expansion of \(\mathcal{R}\),
+we can only show that&lt;/p&gt;
+
+\[\begin{equation}
+\bar\theta_\gamma = \theta^*+\gamma C +\mathcal{O}(\gamma^2)
+\tag{3}\label{gen_output}
+\end{equation}\]
+
+&lt;p&gt;where \(C\) is a constant independent of \(\gamma\).
+Therefore the averaged SGD will only converge to a point &quot;near&quot; the
+optimum. To get a better estimate of \(\theta^*\), we can use Richardson
+extrapolation. For instance, for two terms, the idea is to run SGD with
+rates \(\gamma\) and \(2\gamma\), which will yield estimates of
+\(\bar\theta_\gamma\) and \(\bar\theta_{2\gamma}\). Then, from
+\eqref{gen_output}, notice that :&lt;/p&gt;
+
+\[\begin{aligned}
+2\bar\theta_\gamma - \bar\theta_{2\gamma} = \theta^* + \mathcal{O}(\gamma^2)
+\end{aligned}\]
+
+&lt;p&gt;is a better estimate of \(\theta^*\). This approach can simply be
+generalized to more terms (runs of the SGD).&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/images/stoML/sgd_general.png&quot; /&gt;
+  &lt;figcaption&gt;(Left) Convergence of iterates $\theta^{(k)}_\gamma$ and averaged
+iterates $\bar\theta^{(k)}_\gamma$ to the mean $\bar\theta_\gamma$ under
+the stationary distribution $\pi_\gamma$. (Right) Richardson-Romberg
+extrapolation, the disks are of radius $\mathcal{O}(\gamma^2)$. Source :
+(Dieuleveut, 2017).&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Bach, F. (2012). &lt;em&gt;Stochastic gradient methods for machine learning&lt;/em&gt;.
+Technical report. INRIA-ENS, Paris, France. Available at &lt;a href=&quot;http://www.di.ens.fr/~fbach/fbach_sgd_online.pdf&quot;&gt;http://www.di.ens.fr/~fbach/fbach_sgd_online.pdf&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Dieuleveut, A., Durmus, A., Bach, F. (2017). Bridging the Gap between
+Constant Step Size Stochastic Gradient Descent and Markov Chains. arXiv
+preprint arXiv:1707.06386.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Dieuleveut, A. (2017, December). &lt;em&gt;Stochastic algorithms in Machine
+Learning&lt;/em&gt;. Paper presented at &quot;Journée algorithmes stochastiques&quot;,
+Université Paris Dauphine, Paris, France.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Roux, N. L., Schmidt, M., Bach, F. R. (2012). &lt;em&gt;A stochastic gradient
+method with an exponential convergence rate for finite training sets&lt;/em&gt;.
+In Advances in Neural Information Processing Systems (pp. 2663-2671).&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Mike Pereira</name><email>mike.pereira@minesparis.psl.eu</email></author><category term="Sequential Monte Carlo" /><category term="Feynmac-Kac" /><category term="Particle filtering" /><summary type="html">This note is an attempt to convey the main ideas and notions of the talk entitled “Stochastic algorithms in Machine Learning” given by Aymeric Dieuleveut (EPFL, Lausanne, Switzerland) during the Stochastic algorithm Day 2017 (Journée algorithmes stochastiques 2017). This conference was held at Université Paris Dauphine (Paris, France) on December 1st, 2017.</summary></entry></feed>
