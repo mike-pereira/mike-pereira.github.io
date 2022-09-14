@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "Personal webpage of Mike Pereira"
+title: "Personal webpage"
 excerpt: "About me"
 author_profile: true
 redirect_from: 
