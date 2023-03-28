@@ -14,5 +14,5 @@ I am an Assistant Professor (Enseignant-Chercheur, Tenure Track position) of Geo
 My research areas are primarily spatial and computational statistics. But I also have strong interests in Machine Learning, extreme value theory and stochastic partial differential equations, and how these domains can foster new approaches to deal with spatio-temporal data. 
 
 
-#### Postdoc / Research Engineer opportunity
+### Postdoc / Research Engineer opportunity
 [Development of a deep learning model for in situ uranium recovery optimization](../files/2023_ISR_MachineLearning_ENG.pdf) 
