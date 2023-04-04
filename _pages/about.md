@@ -16,3 +16,6 @@ My research areas are primarily spatial and computational statistics. But I also
 
 ### Postdoc / Research Engineer opportunity
 [Development of a deep learning model for in situ uranium recovery optimization](../files/2023_ISR_MachineLearning_ENG.pdf) 
+
+### PhD position opportunity
+[Physics-informed statistical modeling of earthquakes](../files/physics-informed_statistical_modeling_earthquakes.pdf) 
