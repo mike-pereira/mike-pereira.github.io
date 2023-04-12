@@ -1,7 +1,7 @@
 ---
 layout: archive
 title: "Stochastic models for spatio-temporal data on surfaces"
-permalink: /PSL-SG/
+permalink: /PSL-SG-OLD/
 author_profile: true
 ---
 
