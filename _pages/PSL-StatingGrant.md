@@ -1,7 +1,7 @@
 ---
 layout: archive
 title: "Talks and presentations"
-permalink: /talks/
+permalink: /PSL-SG/
 author_profile: true
 ---
 
