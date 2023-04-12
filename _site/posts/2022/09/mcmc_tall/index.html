@@ -1,0 +1,853 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Markov chain Monte Carlo and tall data - Mike Pereira</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en-US">
+<meta property="og:site_name" content="Mike Pereira">
+<meta property="og:title" content="Markov chain Monte Carlo and tall data">
+
+
+  <link rel="canonical" href="http://localhost:4000/posts/2022/09/mcmc_tall/">
+  <meta property="og:url" content="http://localhost:4000/posts/2022/09/mcmc_tall/">
+
+
+
+  <meta property="og:description" content="This note is an attempt to convey the main ideas and notions of the talk entitled “On Markov chain Monte Carlo and tall data” given by Rémi Bardenet (CNRS, Lille, France) during the Stochastic algorithm Day 2017 (Journée algorithmes stochastiques 2017). This conference was held at Université Paris Dauphine (Paris, France) on December 1st, 2017.">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2022-09-01T00:00:00+02:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Mike Pereira",
+      "url" : "http://localhost:4000",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Mike Pereira Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="http://localhost:4000/images/apple-touch-icon-57x57.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="60x60" href="http://localhost:4000/images/apple-touch-icon-60x60.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="76x76" href="http://localhost:4000/images/apple-touch-icon-76x76.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="120x120" href="http://localhost:4000/images/apple-touch-icon-120x120.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="152x152" href="http://localhost:4000/images/apple-touch-icon-152x152.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:4000/images/apple-touch-icon-180x180.png?v=M44lzPylqQ">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-32x32.png?v=M44lzPylqQ" sizes="32x32">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/android-chrome-192x192.png?v=M44lzPylqQ" sizes="192x192">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-96x96.png?v=M44lzPylqQ" sizes="96x96">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-16x16.png?v=M44lzPylqQ" sizes="16x16">
+<link rel="manifest" href="http://localhost:4000/images/manifest.json?v=M44lzPylqQ">
+<link rel="mask-icon" href="http://localhost:4000/images/safari-pinned-tab.svg?v=M44lzPylqQ" color="#000000">
+<link rel="shortcut icon" href="/images/favicon.ico?v=M44lzPylqQ">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="msapplication-TileImage" content="http://localhost:4000/images/mstile-144x144.png?v=M44lzPylqQ">
+<meta name="msapplication-config" content="http://localhost:4000/images/browserconfig.xml?v=M44lzPylqQ">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/academicons.css"/>
+
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/">Mike Pereira</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/publications/">Publications</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/talks/">Talks</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/teaching/">Teaching</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/year-archive/">Blog Posts</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/cv/">CV</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="http://localhost:4000/images/mike.png" class="author__avatar" alt="Mike Pereira">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Mike Pereira</h3>
+    <p class="author__bio">Assistant professor (Enseignant-chercheur, Tenure track), Mines Paris - PSL</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Fontainebleau, France</li>
+      
+      
+      
+      
+        <li><a href="mailto:mike.pereira@minesparis.psl.eu"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i> Email</a></li>
+      
+      
+       
+        <li><a href="https://www.researchgate.net/profile/Mike-Pereira"><i class="fab fa-fw fa-researchgate" aria-hidden="true"></i> ResearchGate</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://github.com/mike-pereira"><i class="fab fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://scholar.google.com/citations?user=96uBOBMAAAAJ&hl=en&oi=ao"><i class="fas fa-fw fa-graduation-cap"></i> Google Scholar</a></li>
+      
+      
+      
+        <li><a href="https://orcid.org/0000-0002-7899-2690"><i class="ai ai-orcid-square ai-fw"></i> ORCID</a></li>
+      
+      
+      
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Markov chain Monte Carlo and tall data">
+    <meta itemprop="description" content="This note is an attempt to convey the main ideas and notions of the talk entitled “On Markov chain Monte Carlo and tall data” given by Rémi Bardenet (CNRS, Lille, France) during the Stochastic algorithm Day 2017 (Journée algorithmes stochastiques 2017). This conference was held at Université Paris Dauphine (Paris, France) on December 1st, 2017.">
+    <meta itemprop="datePublished" content="September 01, 2022">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Markov chain Monte Carlo and tall data
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  9 minute read
+	
+</p>
+          
+        
+        
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Published:</strong> <time datetime="2022-09-01T00:00:00+02:00">September 01, 2022</time></p>
+        
+        
+             
+        
+    
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p>This note is an attempt to convey the main ideas and notions of the talk entitled “On Markov chain Monte Carlo and tall data” given by Rémi Bardenet (CNRS, Lille, France) during the Stochastic algorithm Day 2017 (<em>Journée algorithmes stochastiques 2017</em>). This conference was held at Université Paris Dauphine (Paris, France) on December 1st, 2017.</p>
+
+<h2 id="metropolis-hastings-algorithm">Metropolis-Hastings algorithm</h2>
+
+<p>The Metropolis-Hastings algorithm builds a Markov Chain
+\((X_k)_{k\geq 1}\) with a given limiting distribution \(\pi(X)\). It
+requires the specification of a transition distribution that controls
+the exploration process of the Markov Chain.</p>
+
+<p>Basically, at a state \(X_k\) of the chain, two steps are required to get
+to the next state:</p>
+
+<ol>
+  <li>
+    <p>Draw a candidate \(X^*\) for the new state \(X_{k+1}\) from the
+transition distribution \(\pi(X_k \rightarrow .)\)</p>
+  </li>
+  <li>
+    <p>Accept the update \(X_{k+1} \leftarrow X^*\) with probability
+\(\alpha(X^*,X_k)=\frac{\pi(X^*)}{\pi(X_k)}\) (otherwise,
+\(X_{k+1}\leftarrow X_k\))</p>
+  </li>
+</ol>
+
+<p>Notice in particular that \(\pi(X)\) is only involved in the computation
+of the probability \(\alpha\). Knowing it up to a multiplicative constant
+is therefore sufficient.</p>
+
+<p>The samples from such Markov Chains are used to compute complex
+integrals of the form : \(\int h(X)\pi(X) dX=\mathbb{E}[h(X)]\) Indeed,
+if \((x_1,...,x_M)\) are \(M\) independent samples from the chain, the
+central limit theorem ensures that:</p>
+
+\[\sqrt{M}\left[\frac{1}{M}\sum\limits_{m=1}^M h(x_m) - \int h(X)\pi(X) dX \right] \rightarrow \mathcal{N}(0,\sigma^2_{\text{lim}}(h))
+\label{sumInt}\]
+
+<h2 id="bayesian-statistics">Bayesian statistics</h2>
+
+<p>Statisticians recommend <em>actions</em> based on a model
+\(\pi(\theta,x_1,...,x_N)\) on:</p>
+
+<ul>
+  <li>
+    <p>\(x_1,...,x_N\) : some observable data</p>
+  </li>
+  <li>
+    <p>\(\theta\) : the (underlying) state of the world</p>
+  </li>
+</ul>
+
+<p>If a loss (function) \(L(\theta,a)\) can be associated with taking action
+\(a\) when the state of the world is \(\theta\), then its minimization
+provides a criterion on the choice of the "best" action to recommend
+\(a^*\). Given that the actual state of the world is unknown, the
+minimization problem becomes :</p>
+
+\[a^*=\mathop{\text{argmin}}\limits_a \int L(\theta,a)\pi(\theta \vert x_1,...,x_N)d\theta\]
+
+<p>where \(\pi(\theta \vert x_1,...,x_N)\) is the probability that the world
+is in state \(\theta\) given the observations \(x_1,...,x_N\). One way to
+compute this integral is to use (independent) samples from
+\(\pi(\theta \vert x_1,...,x_n)\).</p>
+
+<p>A common situation is the one where:</p>
+
+<ul>
+  <li>
+    <p>the beliefs on \(\theta\) <strong>prior</strong> to an experiment (leading to the
+observations) can be summarized into a distribution \(\pi(\theta)\)
+(called <em>prior distribution</em>)</p>
+  </li>
+  <li>
+    <p>the measurements/observations \(x_1,...,x_N\) are assumed to be i.i.d.
+from the known distribution \(\pi(.\vert \theta)\) Then, Bayes’
+identity gives
+\(\pi(\theta \vert x_1,...,x_N) \propto \pi(\theta)\prod\limits_{i=1}^N\pi(x_i\vert \theta)\)</p>
+  </li>
+</ul>
+
+<p>Therefore, the Metropolis-Hastings algorithm is particularly suited for
+drawing samples from \(\pi(\theta \vert x_1,...,x_N)\) as it only requires
+to know the target distribution up to a multiplicative constant, which
+is the case here. In fact, the associated update probability is given
+by:</p>
+
+\[\alpha(\theta^*,\theta_k)=\frac{\pi(\theta^*)\prod\limits_{i=1}^N\pi(x_i\vert \theta^*)}{ \pi(\theta_k)\prod\limits_{i=1}^N\pi(x_i\vert \theta_k)}\]
+
+<p>The computation of this probability, which has to be done at each
+iteration of the algorithm, may be very costly if the number of
+observations \(N\) is huge, and even more so if these observations are
+scattered across multiple servers.</p>
+
+<p>A workaround is to find a way to compute a proxy of the probability that
+would only require a (small) subset of all the observations. Basically,
+the goal is to design a Bayesian equivalent of the Stochastic gradient
+decent algorithm.</p>
+
+<h2 id="divide-and-conquer-approaches">Divide-and-conquer approaches</h2>
+
+<p>In these approaches, the dataset is divided into batches. Then, the MCMC
+algorithms are run separately on each batch. Finally the results are
+combined using one of the following approaches:</p>
+
+<h3 id="multiplication-of-smooth-approximations-of-the-batch-posterior-distributions">Multiplication of smooth approximations of the batch posterior distributions</h3>
+
+<h4 id="presentation">Presentation</h4>
+<p>The data \(\boldsymbol x\) is separated into \(S\) batches \(\boldsymbol x =(\boldsymbol x_1,...,\boldsymbol x_S)\). Denote \(\theta_1^{(s)},...,\theta_M^{(s)}\) the samples from the posterior \(\pi(\theta\vert\boldsymbol x_s)\) obtained after running the MCMC algorithm on batch \(\boldsymbol x_s\). If \(\pi(\theta\vert\boldsymbol x_s)\) is Gaussian (asymptotically true when \(M\rightarrow \infty\)), and we denote \(\pi(\theta\vert\boldsymbol x_s)\sim\mathcal{N}(\mu_s,\Sigma_s)\) then</p>
+
+\[\prod\limits_{s}\pi(\theta\vert\boldsymbol x_s)\sim\mathcal{N}\left(V \sum\limits_{s}\Sigma_s^{-1}\mu_s,\; V \right), \quad V=\left(\sum\limits_{s}\Sigma_s^{-1}\right)^{-1}\]
+
+<p>On the other hand, by sampling from
+\(\pi(\theta\vert\boldsymbol x_s)\propto \pi(\boldsymbol x_s\vert \theta)\pi(\theta)^{1/S}\),
+we get</p>
+
+\[\prod\limits_{s}\pi(\theta\vert\boldsymbol x_s) \propto \pi(\theta)\prod\limits_{s}\pi(\boldsymbol x_s\vert\theta) = \pi(\theta)\pi(\boldsymbol x\vert\theta) \propto \pi(\theta \vert \boldsymbol x)\]
+
+<p>Therefore, we have</p>
+
+\[\pi(\theta \vert \boldsymbol x) \propto \mathcal{N}\left(V\sum\limits_{s}\Sigma_s^{-1}\mu_s,\; V\right)\]
+
+<p>where \((\mu_s, \Sigma_s)\) can be approximated by the sample mean
+and covariance from the MCMC run, namely:</p>
+
+\[\widehat{\mu}_s=\frac{1}{M}\sum\limits_{m=1}^M \theta_m^{(s)},\]
+
+\[\widehat{\Sigma}_s=\frac{1}{M}\sum\limits_{m=1}^M (\theta_m^{(s)}-\widehat{\mu}_s)(\theta_m^{(s)}-\widehat{\mu}_s)^T, \quad \widehat{V}=\left(\sum\limits_s \widehat{\Sigma}_s^{-1}\right)^{-1}\]
+
+<h4 id="drawback">Drawback</h4>
+<p>The mean squared error of resulting estimators scales exponentially with the number of batches.</p>
+
+<h3 id="target-a-more-tractable-result-than-the-full-posterior">Target a more tractable result than the full posterior</h3>
+
+<h4 id="presentation-1">Presentation</h4>
+<p>Given \(S\) posteriors \(\pi(\theta,\boldsymbol x_1),...,\pi(\theta,\boldsymbol x_S)\) obtained from the MCMC runs on batches \(\boldsymbol x_1,...,\boldsymbol x_S\), instead of trying to estimate the full posterior, we can rather compute the equivalent for probability measures of the <em>median</em> or the <em>barycentre</em> of the posteriors.</p>
+
+<h4 id="drawback-1">Drawback</h4>
+<p>The statistical meaning of the result is unclear.</p>
+
+<h2 id="subsampling-approaches">Subsampling approaches</h2>
+
+<p>The idea is to replace the acceptance probability \(\alpha\) of the
+Metropolis-Hastings algorithm by an estimator computed on a subset of
+the whole dataset. To do so, notice that:</p>
+
+\[\log\alpha(\theta^*,\theta)=\log\frac{\pi(\theta^*)}{\pi(\theta)}+\sum\limits_{i=1}^N\log\frac{\pi(x_i\vert \theta^*)}{\pi(x_i\vert \theta)}\]
+
+<p>In particular, if \(u\sim\mathcal{U}(]0,1])\) we have:</p>
+
+\[\begin{aligned}
+u\le \alpha(\theta^*,\theta) &amp;\Leftrightarrow \log u \le \log \alpha \Leftrightarrow \log u - \log\frac{\pi(\theta^*)}{\pi(\theta)} \le \sum\limits_{i=1}^N\log\frac{\pi(x_i\vert \theta^*)}{\pi(x_i\vert \theta)} \\
+&amp;\Leftrightarrow \frac{1}{N}\log\left( u \frac{\pi(\theta)}{\pi(\theta^*)}\right) \le \frac{1}{N} \sum\limits_{i=1}^N\log\frac{\pi(x_i\vert \theta^*)}{\pi(x_i\vert \theta)} \end{aligned}\]
+
+<p>Introducing:</p>
+
+\[\psi(u,\theta,\theta^*):=\frac{1}{n}\log\left( u \frac{\pi(\theta)}{\pi(\theta^*)}\right)\]
+
+<p>and</p>
+
+\[\Lambda_N(\theta,\theta^*):=\frac{1}{N}\sum\limits_{i=1}^N\log\frac{\pi(x_i\vert \theta^*)}{\pi(x_i\vert \theta)}=\frac{1}{\vert \boldsymbol x\vert}\sum\limits_{x\in\boldsymbol x}\log\frac{\pi(x\vert \theta^*)}{\pi(x\vert \theta)}\]
+
+<p>we get,</p>
+
+\[\mathbb{P}\big(\Lambda_N(\theta,\theta^*) \ge \psi(u,\theta,\theta^*)\big)=\mathbb{P}(u\leq \alpha(\theta^*,\theta))=\min(\alpha(\theta^*,\theta),1)\]
+
+<p>Therefore, the MH algorithm is based on the verification of whether</p>
+
+\[\Lambda_N(\theta,\theta^*) \ge \psi(u,\theta,\theta^*)
+\label{accDec}\]
+
+<p>Computing \(\Lambda_N(\theta,\theta^*)\) constitutes the
+bottleneck of the method. It can be replaced by an unbiased estimator
+computed from only a small subset \(\boldsymbol x_s\) of \(S &lt; N\) (uniform) samples
+of the whole dataset:</p>
+
+\[\Lambda_s(\theta,\theta^*)=\frac{1}{S}\sum\limits_{x\in\boldsymbol x_s}\log\frac{\pi(x\vert \theta^*)}{\pi(x\vert \theta)}\]
+
+<p>In particular, this problem is equivalent to the estimation of the mean
+\(\Lambda_N(\theta,\theta^*)\) of the population</p>
+
+\[\left\lbrace\log\frac{\pi(x_i\vert \theta^*)}{\pi(x_i\vert \theta)}, i\in [\![1,N]\!] \right\rbrace\]
+
+<p>by the mean  \(\Lambda_s(\theta,\theta^*)\) of one of its samples. Two
+methods can be used to check whether \(\Lambda_N(\theta,\theta^*) \ge \psi(u,\theta,\theta^*)\) based on the values of \(\Lambda_s(\theta,\theta^*)\) and \(\psi(u,\theta,\theta^*)\), with a tolerated error \(\epsilon\) (fixed for all iterations):</p>
+
+<h3 id="t-tests-on-the-sample-mean-lambda_sthetatheta">T-tests on the sample mean \(\Lambda_s(\theta,\theta^*)\)</h3>
+
+<p>The hypothesis
+\(\Lambda_s(\theta,\theta^*)&gt;\psi(u,\theta,\theta^*)\) can be
+tested using the statistic :</p>
+
+\[t_s=\frac{\Lambda_s(\theta,\theta^*)-\psi(u,\theta,\theta^*)}{\sqrt{(S-N)/(N-1)}\sqrt{\sigma_s^2(\theta,\theta^*)/S}} \quad\]
+
+<p>where</p>
+
+\[\sigma_s^2(\theta,\theta^*) = \frac{1}{S-1}\sum\limits_{x\in\boldsymbol x_s} \left(\log\frac{\pi(x\vert \theta^*)}{\pi(x\vert \theta)}-\Lambda_s(\theta,\theta^*)\right)^2,\]
+
+<p>which is assumed to follow a Student t-distribution with \(S-1\)
+degrees of freedom (denoted \(\text{Student}(S-1)\)) when \(S\) is
+big enough.</p>
+
+<p>The tests proceed in two steps :</p>
+
+<ul>
+  <li>
+    <p>A first test is realized to check whether the population
+mean \(\Lambda_N(\theta,\theta^*)\) is significantly different
+from the threshold \(\psi(u,\theta,\theta^*)\). It will be the
+case if the statistic \(t_s\) verifies :</p>
+
+\[|t_s| &gt; \phi_{S-1}^{-1}(1-\epsilon), \quad \phi_{S-1}: \text{ cdf of Student}(S-1)\]
+
+    <p>which is the condition for which the null hypothesis
+\(\Lambda_N(\theta,\theta^*) = \psi(u,\theta,\theta^*)\) is
+rejected (in a Student t-test with significance \(\epsilon\)).
+Therefore, we need to have</p>
+
+\[\delta_s:=1-\phi_{S-1}(|t_s|)&lt;\epsilon\]
+
+    <p>Samples are added
+to \(\boldsymbol x_s\) as long as this condition in not verified.</p>
+  </li>
+  <li>
+    <p>Decide \(\Lambda_N(\theta,\theta^*)&gt;\psi(u,\theta,\theta^*)\)
+if \(\Lambda_s(\theta,\theta^*)&gt;\psi(u,\theta,\theta^*)\), and
+\(\Lambda_N(\theta,\theta^*)&lt;\psi(u,\theta,\theta^*)\)
+otherwise.</p>
+  </li>
+</ul>
+
+<h3 id="concentration-inequalities">Concentration inequalities</h3>
+
+<ul>
+  <li>For \(\epsilon &gt;0\), the idea is to "locate"
+\(\Lambda_N(\theta,\theta^*)\) around \(\Lambda_s(\theta,\theta^*)\)
+with probability \(1-\epsilon\), i.e. compute \((S,c_s(\epsilon))\)
+such that :</li>
+</ul>
+
+\[\mathbb{P}\big(\vert\Lambda_s(\theta,\theta^*)-\Lambda_N(\theta,\theta^*)\vert\le c_s(\epsilon)\big)\ge 1-\epsilon\]
+
+<p>Then, with probability \(1-\epsilon\), we have the following
+confidence interval :</p>
+
+\[\Lambda_s(\theta,\theta^*)-c_s(\epsilon)\le\Lambda_N(\theta,\theta^*)\le \Lambda_s(\theta,\theta^*)+c_s(\epsilon)\]
+
+<p>which gives a way to check whether
+\(\Lambda_N(\theta,\theta^*)&gt;\psi(u,\theta,\theta^*)\).</p>
+
+<p>In fact, the sample size \(S\) is chosen so that the size
+\(c_s(\epsilon)\) of the confidence interval/concentration is
+smaller than the difference
+\(|\Lambda_s(\theta,\theta^*)-\psi(u,\theta,\theta^*)|\). In the
+case of sampling without replacement, \(c_s(\epsilon)\) can be
+shown to depend (linearly) on the sample standard deviation and
+the value of the sample with the largest magnitude.</p>
+
+<p>A way to decrease this term without adding an excessive number
+of samples is to use proxy functions
+\(\lbrace\rho_i(\theta,\theta^*), i\in [\![1,N]\!]\rbrace\)
+verifying:</p>
+
+<ul>
+  <li>
+    <p>for all \(i\in [\![1,n]\!]\), \(\rho_i(\theta,\theta^*)\approx \log\frac{\pi(x_i\vert \theta^*)}{\pi(x_i\vert \theta)}\)</p>
+  </li>
+  <li>
+    <p>\(\sum\limits_{i=1}^N  \rho_i(\theta,\theta^*)\) is easily
+  computable</p>
+  </li>
+  <li>
+    <p>\(\left\lbrace \left\vert\rho_i(\theta,\theta^*)- \log\frac{\pi(x_i\vert \theta^*)}{\pi(x_i\vert \theta)}\right\vert, i\in [\![1,n]\!]\right\rbrace\) can easily be bounded</p>
+  </li>
+</ul>
+
+<p>In that case, the acceptance decision is equivalent to checking whether</p>
+
+\[\frac{1}{N}\sum\limits_{i=1}^N \left[\log\frac{\pi(x_i\vert \theta^*)}{\pi(x_i\vert \theta)}-\rho_i(\theta,\theta^*)\right] &gt; \tilde\psi(u,\theta,\theta^*)=\psi(u,\theta,\theta^*)-\sum\limits_{i=1}^N  \rho_i(\theta,\theta^*)\]
+
+<p>And therefore the same subsampling reasoning can be applied to the population</p>
+
+\[\left\lbrace\log\frac{\pi(x_i\vert \theta^*)}{\pi(x_i\vert \theta)}-\rho_i(\theta,\theta^*), i\in [\![1,n]\!] \right\rbrace\]
+
+<p>which by construction will give rise to smaller values of
+concentration sizes \(c_s(\epsilon)\). An example of such proxy
+functions are Taylor expansions of the log-likelihood function
+\((x,\theta) \mapsto \log \pi(x \vert \theta)\).</p>
+
+<h3 id="number-of-calls">Number of calls</h3>
+
+<p>In the original algorithm, at each iteration \(k+1\), given the current
+value of the parameters \(\theta_k\) and a proposal \(\theta^*\), we need to compute</p>
+
+\[\Lambda_N(\theta_k,\theta^*)=\underbrace{\frac{1}{\vert \boldsymbol x\vert}\sum\limits_{x\in\boldsymbol x}\log\pi(x\vert \theta^*)}_{\text{not computed yet}} -\underbrace{\frac{1}{\vert \boldsymbol x\vert}\sum\limits_{x\in\boldsymbol x}\log\pi(x\vert \theta_k)}_{\text{computed at iteration }k}\]
+
+<p>Therefore \(N\) calls to the log-likelihood function
+\((x,\theta) \mapsto \log \pi(x \vert \theta)\) are needed at each
+iteration.<br />
+With these new subsampling approaches, the samples sizes (and the sample
+themseleves) change from one iteration to the other. So the quantity to
+compute at iteration \(k+1\) is</p>
+
+\[\Lambda_s(\theta_k,\theta^*)=\underbrace{\frac{1}{\vert \boldsymbol x_s\vert}\sum\limits_{x\in\boldsymbol x_s}\log\pi(x\vert \theta^*)}_{\text{not computed yet}} -\underbrace{\frac{1}{\vert \boldsymbol x_s\vert}\sum\limits_{x\in\boldsymbol x_s}\log\pi(x\vert \theta_k)}_{\text{may be diffrent than iteration }k}\]
+
+<p>Therefore, in general, \(2S\) calls to the log-likelihood function
+\((x,\theta) \mapsto \log \pi(x \vert \theta)\) are needed at each
+iteration, where \(S\) varies between iterations. Hence, subsampling
+methods are interesting as long as for most (if not all) iterations, we
+have \(2S &lt;&lt; N\).</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>
+    <p>Bardenet, R. (2017, December). <em>On Markov chain Monte Carlo for tall
+data</em>. Paper presented at "Journée algorithmes stochastiques",
+Université Paris Dauphine, Paris, France.</p>
+  </li>
+  <li>
+    <p>Bardenet, R., Doucet, A., Holmes, C. (2015). <em>On Markov chain Monte
+Carlo methods for tall data</em>. arXiv preprint arXiv:1505.02827.</p>
+  </li>
+  <li>
+    <p>Korattikara, A., Chen, Y., Welling, M. (2014). <em>Austerity in MCMC land:
+Cutting the Metropolis-Hastings budget</em>. In Proceedings of the 31st
+International Conference on Machine Learning (ICML-14) (pp. 181-189).</p>
+  </li>
+  <li>
+    <p>Minsker, S., Srivastava, S., Lin, L., Dunson, D. (2014, January).
+<em>Scalable and robust Bayesian inference via the median posterior</em>. In
+International Conference on Machine Learning (pp. 1656-1664).</p>
+  </li>
+  <li>
+    <p>Neiswanger, W., Wang, C., Xing, E. (2013). <em>Asymptotically exact,
+embarrassingly parallel MCMC</em>. arXiv preprint arXiv:1311.4780.</p>
+  </li>
+</ul>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="http://localhost:4000/tags/#mcmc" class="page__taxonomy-item" rel="tag">MCMC</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#metropolis-hastings" class="page__taxonomy-item" rel="tag">Metropolis-Hastings</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#tall-data" class="page__taxonomy-item" rel="tag">Tall data</a>
+    
+    </span>
+  </p>
+
+
+
+
+      </footer>
+
+      
+
+<section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=http://localhost:4000/posts/2022/09/mcmc_tall/" class="btn btn--twitter" title="Share on Twitter"><i class="fab fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/posts/2022/09/mcmc_tall/" class="btn btn--facebook" title="Share on Facebook"><i class="fab fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/posts/2022/09/mcmc_tall/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+      
+
+
+  <nav class="pagination">
+    
+      <a href="http://localhost:4000/posts/2019/10/pg2019/" class="pagination--pager" title="A few take-away messages from the conference Petroleum Geostatistics 2019
+">Previous</a>
+    
+    
+      <a href="http://localhost:4000/posts/2022/09/stoML/" class="pagination--pager" title="Stochastic algorithms in Machine Learning
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      
+        <h4 class="page__related-title">You May Also Enjoy</h4>
+      
+      <div class="grid__wrapper">
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="http://localhost:4000/posts/2022/09/stoML/" rel="permalink">Stochastic algorithms in Machine Learning
+</a>
+      
+    </h2>
+    
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  11 minute read
+	
+</p>
+    
+
+        
+         <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Published:</strong> <time datetime="2022-09-01T00:00:00+02:00">September 01, 2022</time></p>
+        
+
+    
+    <p class="archive__item-excerpt" itemprop="description"><p>This note is an attempt to convey the main ideas and notions of the talk entitled “Stochastic algorithms in Machine Learning” given by Aymeric Dieuleveut (EPFL, Lausanne, Switzerland) during the Stochastic algorithm Day 2017 (<em>Journée algorithmes stochastiques 2017</em>). This conference was held at Université Paris Dauphine (Paris, France) on December 1st, 2017.</p>
+
+</p>
+    
+    
+    
+
+  </article>
+</div>
+
+        
+          
+
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="http://localhost:4000/posts/2019/10/pg2019/" rel="permalink">A few take-away messages from the conference Petroleum Geostatistics 2019
+</a>
+      
+    </h2>
+    
+    
+      <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+  
+	  2 minute read
+	
+</p>
+    
+
+        
+         <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Published:</strong> <time datetime="2019-10-01T00:00:00+02:00">October 01, 2019</time></p>
+        
+
+    
+    <p class="archive__item-excerpt" itemprop="description"><p>On September 2-6, 2019, I attended on behalf of <a href="https://estimages.com/">Estimages</a> (the company funding my PhD) the conference <a href="https://www.earthdoc.org/content/proceedings/florence2019">Petroleum Geostatistics 2019</a> in Florence, Italy. Here is my take on the messages that were delivered during this exciting conference.</p>
+
+</p>
+    
+    
+    
+
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+<a href="/sitemap/">Sitemap</a>
+<!-- end custom footer snippets -->
+
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/mike-pereira"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    <li><a href="http://localhost:4000/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 Mike Pereira. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/main.min.js"></script>
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+
