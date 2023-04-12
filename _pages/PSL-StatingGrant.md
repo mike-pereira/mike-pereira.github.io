@@ -36,7 +36,7 @@ figcaption {
 
 <div style="text-align:center;">
 <a id="sulfate"></a>
-<video width="300" style="float:center;" alt="Sulfate simulation" controls>
+<video width="300" style="float:center;" alt="Sulfate simulation"  lazy-loading="true" controls>
   <source src="/images/PSL/sulfate.mp4" type="video/mp4">
 </video><br>
   <figcaption> Fig. 1.1: Simulation of the presence of sulfate in the Earth atmosphere (Courtesy of the <a href="https://sos.noaa.gov/catalog/datasets/aerosols-sulfate/">NASA Global Modeling and Assimilation Office</a>) </figcaption>
@@ -53,7 +53,7 @@ figcaption {
 
 <div style="text-align:center;">
 <a id="diff-sphere"></a>
-<video width="1000" style="float:center;" alt="Diffusion SPDE on the sphere" controls>
+<video width="1000" style="float:center;" alt="Diffusion SPDE on the sphere"  lazy-loading="true" controls>
   <source src="/images/PSL/diff-sphere.mp4" type="video/mp4">
 </video><br>
 <img src="/images/PSL/legend_diff-sphere.png" style="float:center;height:80px">  
@@ -73,12 +73,12 @@ figcaption {
 <img src="/images/PSL/advPot-brain.png" style="float:center;height:400px" alt="Advection potential on a cortical surface"><br>
 <img src="/images/PSL/legend_adv-brain.png" style="float:center;height:80px"> 
 <p style="font-size:90%;color:black;font-family:Academicons"> (A) Advection potential function $\phi$.</p>
-<video style="float:center;height:400px" alt="Advection-Diffusion SPDE on a cortical surface (no stabilization)" controls>
+<video style="float:center;height:400px" alt="Advection-Diffusion SPDE on a cortical surface (no stabilization)"  lazy-loading="true" controls>
   <source src="/images/PSL/adv-diff-brain-nostab.mp4" type="video/mp4">
 </video><br>
 <img src="/images/PSL/legend_adv-brain.png" style="float:center;height:80px">  
 <p style="font-size:90%;color:black;font-family:Academicons"> (B) Numerical solution of the SPDE, without stabilization.</p>
-<video style="float:center;height:400px" alt="Advection-Diffusion SPDE on a cortical surface" controls>
+<video style="float:center;height:400px"  lazy-loading="true" alt="Advection-Diffusion SPDE on a cortical surface" controls>
   <source src="/images/PSL/adv-diff-brain-stab.mp4" type="video/mp4">
 </video><br>
 <img src="/images/PSL/legend_adv-brain.png" style="float:center;height:80px">  
