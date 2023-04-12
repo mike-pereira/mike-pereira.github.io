@@ -122,6 +122,7 @@ include:
   - .htaccess
   - _pages
   - files
+  - _psl_sg
 exclude:
   - "*.sublime-project"
   - "*.sublime-workspace"
@@ -244,7 +245,14 @@ defaults:
       layout: talk
       author_profile: true
       share: true
-
+  # _psl_sg
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      author_profile: true
+      
 # Sass/SCSS
 sass:
   sass_dir: _sass
