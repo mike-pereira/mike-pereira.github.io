@@ -22,11 +22,67 @@ figcaption {
 
 
 <div style="text-align:center;">
-<a id="sulfate">
-<img src="/images/PSL/sulfate.gif" style="float:center;width:400px;height:400px;" alt="Simulation of the presence of sulfate in the Earth atmosphere"> 
+<a id="sulfate"></a>
+<img src="/images/PSL/sulfate.gif" style="float:center;height:300px;" alt="Simulation of the presence of sulfate in the Earth atmosphere"> 
   <figcaption> Fig. 1: Simulation of the presence of sulfate in the Earth atmosphere (Courtesy of the <a href="https://sos.noaa.gov/catalog/datasets/aerosols-sulfate/">NASA Global Modeling and Assimilation Office</a>) </figcaption>
-</a>
 </div>
+
+
+<div style="text-align:center;">
+<br>
+<br>
+<br>
+<br>
+</div>
+
+
+<div style="text-align:center;">
+<a id="diff-sphere"></a>
+<img src="/images/PSL/diff-sphere.gif" style="float:center;" alt="Diffusion SPDE"> 
+  <figcaption> Fig. 2: Simulation a spatio-temporal diffusion SPDE on the sphere represented from three different viewpoints on the surface (t represents the time step, std-dev the standard deviation of the field value across the surface). </figcaption>
+</div>
+  
+<div style="text-align:center;">
+<br>
+<br>
+<br>
+<br>
+</div>
+
+
+<div style="text-align:center;">
+<a id="adv-diff-brain"></a>
+<img src="/images/PSL/advPot-brain.png" style="float:center;height:400px" alt="Advection potential on a cortical surface"> 
+<p style="font-size:90%;color:black;font-family:Academicons"> (A) Advection potential function $\phi$.</p>
+<img src="/images/PSL/adv-diff-brain-nostab.gif" style="float:center;height:400px" alt="Advection-Diffusion SPDE on a cortical surface (no stabilization)"> 
+<p style="font-size:90%;color:black;font-family:Academicons"> (B) Numerical solution of the SPDE, without stabilization.</p>
+<img src="/images/PSL/adv-diff-brain-stab.gif" style="float:center;height:400px" alt="Advection-Diffusion SPDE on a cortical surface"> 
+<p style="font-size:90%;color:black;font-family:Academicons"> (C) Numerical solution of the SPDE, eith stabilization.</p>
+  <figcaption> Fig. 3: Simulation of the spatio-temporal advection-diffusion SPDE on a cortical surface, represented from three different viewpoints on the surface (t represents the time step, std-dev the standard deviation of the field values across the surface). </figcaption>
+</div>
+
+
+
+<div style="text-align:center;">
+<br>
+<br>
+<br>
+<br>
+</div>
+
+
+<div style="text-align:center;">
+<a id="adv-diff-sphere"></a>
+<img src="/images/PSL/advPot-sphere.png" style="float:center;" alt="Advection potential on the sphere"> 
+<p style="font-size:90%;color:black;font-family:Academicons"> (A) Advection potential function $\phi$.</p>
+<img src="/images/PSL/adv-diff-sphere.gif" style="float:center;" alt="Advection-Diffusion SPDE on the sphere"> 
+<p style="font-size:90%;color:black;font-family:Academicons"> (B) Numerical solution of the SPDE.</p>
+  <figcaption> Fig. 3: Simulation of the spatio-temporal advection-diffusion SPDE on the sphere, represented from three different viewpoints on the surface (t represents the time step, std-dev the standard deviation of the field values across the surface). </figcaption>
+</div>
+
+
+
+
 
 
 
