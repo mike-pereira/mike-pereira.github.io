@@ -41,7 +41,9 @@ figcaption {
 <img src="/images/PSL/advPot-sphere.png" style="float:center;" alt="Advection potential on the sphere"><br>
 <img src="/images/PSL/legend_adv-sphere.png" style="float:center;height:80px">  
 <p style="font-size:90%;color:black;font-family:Academicons"> (A) Advection potential function $\phi$.</p>
-<img src="/images/PSL/adv-diff-sphere.gif" width="1000" style="float:center;" alt="Advection-Diffusion SPDE on the sphere" >  
+<video  width="1000" style="float:center;" alt="Advection-Diffusion SPDE on the sphere"  lazy-loading="true" controls>
+  <source src="/images/PSL/adv-diff-sphere.mp4" type="video/mp4">
+</video><br>
 <img src="/images/PSL/legend_adv-sphere.png" style="float:center;height:80px">  
 <p style="font-size:90%;color:black;font-family:Academicons"> (B) Numerical solution of the SPDE.</p>
   <figcaption> Fig. 4.2: Simulation of the spatio-temporal advection-diffusion SPDE on the sphere, represented from three different viewpoints on the surface (t represents the time step, std-dev the standard deviation of the field values across the surface). </figcaption>
