@@ -21,6 +21,16 @@ figcaption {
 
 
 
+<div style="text-align:center;">
+<br>
+</div>
+
+[Back to  Table of Figures.](../STRF) 
+
+<div style="text-align:center;">
+<br>
+</div>
+
 
 
 <div style="text-align:center;">

@@ -23,6 +23,19 @@ figcaption {
 
 
 <div style="text-align:center;">
+<br>
+</div>
+
+[Back to  Table of Figures.](../STRF) 
+
+<div style="text-align:center;">
+<br>
+</div>
+
+
+
+
+<div style="text-align:center;">
 <a id="adv-diff-sphere-cov"></a>
  <figcaption> Fig. 4.3: Spatio-temporal evolution of the covariance between a reference point (in blue) and the rest of the points in the domain, for the spatio-temporal model simulated in Fig 4.1. The color (red to blue) represent the value of the covariance. </figcaption>
 <img src="/images/STRF/cov_calc.gif" style="float:center;" alt="Covariance maps"><br>
