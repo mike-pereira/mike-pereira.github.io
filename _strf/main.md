@@ -6,7 +6,7 @@ author_profile: true
 ---
 
 
-This page contains supplementary materials to my preprint entitled "A note on spatio-temporal random fields on meshed surfaces".
+This page contains supplementary materials to my preprint entitled "A note on spatio-temporal random fields on meshed surfaces". [The full-text of the preprint can be found here](../../images/STRF/strf.pdf).
 
 
 * [Fig 1.1(B):Simulation of the presence of sulfate in the Earth atmosphere.](../STRF/sulfate)  
