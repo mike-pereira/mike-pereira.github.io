@@ -8,6 +8,9 @@ author_profile: true
 Preprints
 ----
 
+* **P., M.** (2023). [A note on spatio-temporal random fields on meshed surfaces defined from
+advection-diffusion SPDEs.](../../files/strf.pdf) hal-04132148.
+
 * **P., M.** and Lang, A. (2021). [Galerkin-Chebyshev approximation of Gaussian random fields on compact Riemannian manifolds.](https://arxiv.org/abs/2107.02667) *arXiv preprint arXiv:2107.02667.*
 
 * Lipták, G., **P., M.**, Kulcsár B., Kovács M. and Szederkényi G. (2021). [Traffic reaction model.](https://arxiv.org/abs/2101.10190) *arXiv preprint arXiv :2101.10190.*
