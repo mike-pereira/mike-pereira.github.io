@@ -11,8 +11,6 @@ Preprints
 * **P., M.** (2023). [A note on spatio-temporal random fields on meshed surfaces defined from
 advection-diffusion SPDEs.](../../files/strf.pdf) hal-04132148.
 
-* **P., M.** and Lang, A. (2021). [Galerkin-Chebyshev approximation of Gaussian random fields on compact Riemannian manifolds.](https://arxiv.org/abs/2107.02667) *arXiv preprint arXiv:2107.02667.*
-
 * Lipták, G., **P., M.**, Kulcsár B., Kovács M. and Szederkényi G. (2021). [Traffic reaction model.](https://arxiv.org/abs/2101.10190) *arXiv preprint arXiv :2101.10190.*
 
 * **P., M.**, Desassis, N., Magneron, C., and Palmer, N. (2020). [A matrix-free approach to geostatistical filtering.](https://arxiv.org/abs/2004.02799) *arXiv preprint arXiv:2004.02799.*
@@ -21,6 +19,9 @@ advection-diffusion SPDEs.](../../files/strf.pdf) hal-04132148.
 
 Published
 ----
+
+* **P., M.** and Lang, A. (2023). [Galerkin-Chebyshev approximation of Gaussian random fields on compact Riemannian manifolds.](https://link.springer.com/article/10.1007/s10543-023-00986-8) *BIT Numerical Mathematics, 63(4), 51.*
+
 * Varga, B., **P., M.**, Kulcsár, B., Pariota, L., and Péni, T. (2023). [Data-Driven Distance Metrics for Kriging-Short-Term Urban Traffic State Prediction.](https://ieeexplore.ieee.org/abstract/document/10070380) *IEEE Transactions on Intelligent Transportation Systems.*
 	
 * **P., M.**, Desassis, N., and Allard, D. (2022). [Geostatistics for large datasets on Riemannian manifolds: A matrix-free approach.](https://jds-online.org/journal/JDS/article/1306/info) *Journal of Data Science, 20(4):512–532*.
