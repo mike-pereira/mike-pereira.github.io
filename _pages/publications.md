@@ -8,10 +8,13 @@ author_profile: true
 Preprints
 ----
 
+
+* Zhang, Y., Yu, H., Auriol, J., & **P., M.** (2023). [Mean-square Exponential Stabilization of Mixed-autonomy Traffic PDE System.](https://arxiv.org/abs/2310.15547) *arXiv preprint arXiv:2310.15547.*
+
+* Wiersdalen, S., **P., M.**, Lang, A., Szederkenyi, G., Auriol, J., & Kulcsar, B. (2023). [Incremental Exponential Stability of the Unidirectional Flow Model.](https://arxiv.org/abs/2312.11061) *arXiv preprint arXiv:2312.11061.*
+
 * **P., M.** (2023). [A note on spatio-temporal random fields on meshed surfaces defined from
 advection-diffusion SPDEs.](../../files/strf.pdf) hal-04132148.
-
-* Lipták, G., **P., M.**, Kulcsár B., Kovács M. and Szederkényi G. (2021). [Traffic reaction model.](https://arxiv.org/abs/2101.10190) *arXiv preprint arXiv :2101.10190.*
 
 * **P., M.**, Desassis, N., Magneron, C., and Palmer, N. (2020). [A matrix-free approach to geostatistical filtering.](https://arxiv.org/abs/2004.02799) *arXiv preprint arXiv:2004.02799.*
 
@@ -19,6 +22,8 @@ advection-diffusion SPDEs.](../../files/strf.pdf) hal-04132148.
 
 Published
 ----
+
+* **P., M.**, Kulcsár, B., Lipták, G., Kovács, M., & Szederkényi, G. (2024). [The Traffic Reaction Model: A kinetic compartmental approach to road traffic modeling.](https://doi.org/10.1016/j.trc.2023.104435) *Transportation research part C: emerging technologies, 158, 104435.*
 
 * **P., M.** and Lang, A. (2023). [Galerkin-Chebyshev approximation of Gaussian random fields on compact Riemannian manifolds.](https://link.springer.com/article/10.1007/s10543-023-00986-8) *BIT Numerical Mathematics, 63(4), 51.*
 
