@@ -1,6 +1,6 @@
 ---
 layout: archive
-title: "Stochastic models for spatio-temporal data on surfaces"
+title: "PASDOS : Physics-Aware Statistics for Data On Surfaces"
 permalink: /PSL-SG/adv-diff-sphere
 author_profile: true
 ---
@@ -35,18 +35,17 @@ figcaption {
 
 <div style="text-align:center;">
 <a id="adv-diff-sphere"></a>
- <figcaption> Fig. 4.2: Simulation of the spatio-temporal advection-diffusion SPDE on the sphere, represented from three different viewpoints on the surface (t represents the time step, std-dev the standard deviation of the field values across the surface). </figcaption>
-<img src="/images/PSL/advPot-sphere.png" style="float:center;" alt="Advection potential on the sphere"><br>
-<img src="/images/PSL/legend_adv-sphere.png" style="float:center;height:80px">  
-<p style="font-size:90%;color:black;font-family:Academicons"> (A) Advection potential function $\phi$.</p>
-<video  width="1000" style="float:center;" alt="Advection-Diffusion SPDE on the sphere"  lazy-loading="true" controls>
-  <source src="/images/PSL/adv-diff-sphere.mp4" type="video/mp4">
-</video><br>
-<img src="/images/PSL/legend_adv-sphere.png" style="float:center;height:80px">  
-<p style="font-size:90%;color:black;font-family:Academicons"> (B) Numerical solution of the SPDE.</p>
+ <figcaption> Fig 4.2: Simulation of a solution to the advection-diffusion SPDE on a meshed sphere, represented from three different viewpoints on the surface. </figcaption>
+<img src="/images/STRF/advPot_sim_sph_grad.png" style="float:center;" alt="Advection potential function $\xi$ (irrotational component)."><br>
+<img src="/images/STRF/legend_simadv_sph.png" style="float:center;height:80px">  
+<p style="font-size:90%;color:black;font-family:Academicons"> (A) Advection potential function $\xi$ (irrotational component).</p>
+<img src="/images/STRF/advPot_sim_sph_curl.png" style="float:center;" alt="Advection potential function $\chi$ (divergence-free component)."><br>
+<img src="/images/STRF/legend_simadv_sph.png" style="float:center;height:80px">  
+<p style="font-size:90%;color:black;font-family:Academicons"> (B) Advection potential function $\chi$ (divergence-free component).</p>
+<img src="/images/STRF/sim_sph.gif" style="float:center;" alt="Numerical solution of the SPDE."><br>
+<img src="/images/STRF/legend_sim_sph.png" style="float:center;height:80px">  
+<p style="font-size:90%;color:black;font-family:Academicons"> (C) Numerical solution of the SPDE.</p>
 </div>
-
-
 
 
 

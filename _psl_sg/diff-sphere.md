@@ -1,6 +1,6 @@
 ---
 layout: archive
-title: "Stochastic models for spatio-temporal data on surfaces"
+title: "PASDOS : Physics-Aware Statistics for Data On Surfaces"
 permalink: /PSL-SG/diff-sphere
 author_profile: true
 ---
