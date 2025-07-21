@@ -8,14 +8,15 @@ author_profile: true
 Preprints
 ----
 
-* Cardoso, G. V., & **P., M.**. (2025). Predictive posterior sampling from non-stationary Gaussian process priors via Diffusion models with application to climate data. *arXiv Preprint arXiv:2505. 24556.*
+* Cardoso, G. V., & **P., M.**. (2025). [Predictive posterior sampling from non-stationary Gaussian process priors via Diffusion models with application to climate data.](https://arxiv.org/abs/2505.24556) *arXiv Preprint arXiv:2505. 24556.*
 
-* Jansson, E., Lang, A., & **P., M.**. (2024). Non-stationary Gaussian random fields on hypersurfaces: Sampling and strong error analysis. *arXiv Preprint arXiv:2406. 08185.*
+* Jansson, E., Lang, A., & **P., M.**. (2024). [Non-stationary Gaussian random fields on hypersurfaces: Sampling and strong error analysis.](https://arxiv.org/abs/2406.08185) *arXiv Preprint arXiv:2406. 08185.*
+
 
 Published
 ----
 
-* Grimaud, J.-L., Desassis, N., Chourio-Camacho, D., Renard, D., **P., M.**, Ors, F., Tissoux, H., Bessin, P., Noble, M. (2025). Kriging Alluvial Thicknesses in Valley Bottoms Using Nonstationary Geometric Anisotropies. *Mathematical Geosciences, 1–21.*
+* Grimaud, J.-L., Desassis, N., Chourio-Camacho, D., Renard, D., **P., M.**, Ors, F., Tissoux, H., Bessin, P., Noble, M. (2025). [Kriging Alluvial Thicknesses in Valley Bottoms Using Nonstationary Geometric Anisotropies.](https://link.springer.com/article/10.1007/s11004-025-10200-w) *Mathematical Geosciences, 1–21.*
 
 * Zhang, Y., Yu, H., Auriol, J., & **P., M.** (2023). [Mean-square Exponential Stabilization of Mixed-autonomy Traffic PDE System.](https://www.sciencedirect.com/science/article/abs/pii/S0005109824003534) *Automatica, 170, 111859.*
 
