@@ -8,20 +8,16 @@ author_profile: true
 Preprints
 ----
 
+* Cardoso, G. V., & **P., M.**. (2025). Predictive posterior sampling from non-stationary Gaussian process priors via Diffusion models with application to climate data. *arXiv Preprint arXiv:2505. 24556.*
 
-* Zhang, Y., Yu, H., Auriol, J., & **P., M.** (2023). [Mean-square Exponential Stabilization of Mixed-autonomy Traffic PDE System.](https://arxiv.org/abs/2310.15547) *arXiv preprint arXiv:2310.15547.*
-
-* Wiersdalen, S., **P., M.**, Lang, A., Szederkenyi, G., Auriol, J., & Kulcsar, B. (2023). [Incremental Exponential Stability of the Unidirectional Flow Model.](https://arxiv.org/abs/2312.11061) *arXiv preprint arXiv:2312.11061.*
-
-* **P., M.** (2023). [A note on spatio-temporal random fields on meshed surfaces defined from
-advection-diffusion SPDEs.](../../files/strf.pdf) hal-04132148.
-
-* **P., M.**, Desassis, N., Magneron, C., and Palmer, N. (2020). [A matrix-free approach to geostatistical filtering.](https://arxiv.org/abs/2004.02799) *arXiv preprint arXiv:2004.02799.*
-
-
+* Jansson, E., Lang, A., & **P., M.**. (2024). Non-stationary Gaussian random fields on hypersurfaces: Sampling and strong error analysis. *arXiv Preprint arXiv:2406. 08185.*
 
 Published
 ----
+
+* Grimaud, J.-L., Desassis, N., Chourio-Camacho, D., Renard, D., **P., M.**, Ors, F., Tissoux, H., Bessin, P., Noble, M. (2025). Kriging Alluvial Thicknesses in Valley Bottoms Using Nonstationary Geometric Anisotropies. *Mathematical Geosciences, 1–21.*
+
+* Zhang, Y., Yu, H., Auriol, J., & **P., M.** (2023). [Mean-square Exponential Stabilization of Mixed-autonomy Traffic PDE System.](https://www.sciencedirect.com/science/article/abs/pii/S0005109824003534) *Automatica, 170, 111859.*
 
 * **P., M.**, Kulcsár, B., Lipták, G., Kovács, M., & Szederkényi, G. (2024). [The Traffic Reaction Model: A kinetic compartmental approach to road traffic modeling.](https://doi.org/10.1016/j.trc.2023.104435) *Transportation research part C: emerging technologies, 158, 104435.*
 
@@ -43,7 +39,7 @@ Published
 
 Proceedings
 ----
-* Auriol, J., **P., M.**, and Kulcsár, B. (2023) Mean-square exponential stabilization of coupled hyperbolic systems with random parameters. In *IFAC World Congress 2023*.
+* Auriol, J., **P., M.**, and Kulcsár, B. (2023) [Mean-square exponential stabilization of coupled hyperbolic systems with random parameters.](https://www.sciencedirect.com/science/article/pii/S2405896323013745) In *IFAC World Congress 2023*.
 
 * Desassis, N., Renard, D., **P., M.**, and Freulon, X. (2019). [Plurigaussian simulations with the Stochastic Partial Differential Equation (SPDE) approach.](https://www.earthdoc.org/content/papers/10.3997/2214-4609.201902174) In *Petroleum Geostatistics 2019.*
 
@@ -51,6 +47,13 @@ Proceedings
 
 * **P., M.**, Magneron, C., and Desassis, N. (2019). [Geostatistical filtering of noisy seismic data using stochastic partial differential equations (SPDE).](https://www.earthdoc.org/content/papers/10.3997/2214-4609.201902264) In *Petroleum Geostatistics 2019.*
 
+
+Notes
+----
+
+* **P., M.** (2023). [A note on spatio-temporal random fields on meshed surfaces defined from advection-diffusion SPDEs.](../../files/strf.pdf) hal-04132148.
+
+* **P., M.**, Desassis, N., Magneron, C., and Palmer, N. (2020). [A matrix-free approach to geostatistical filtering.](https://arxiv.org/abs/2004.02799) *arXiv preprint arXiv:2004.02799.*
 
 
 Thesis
