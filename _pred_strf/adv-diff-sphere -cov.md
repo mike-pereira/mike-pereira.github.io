@@ -1,7 +1,7 @@
 ---
 layout: archive
-title: "A note on spatio-temporal random fields on meshed surfaces"
-permalink: /STRF/adv-diff-sphere-cov
+title: "Prediction of spatio-temporal data on meshed surfaces using advection-diffusion SPDEs"
+permalink: /PRED_STRF/adv-diff-sphere-cov
 author_profile: true
 ---
 
@@ -26,7 +26,7 @@ figcaption {
 <br>
 </div>
 
-[Back to  Table of Figures.](../STRF) 
+[Back to  Table of Figures.](../PRED_STRF) 
 
 <div style="text-align:center;">
 <br>

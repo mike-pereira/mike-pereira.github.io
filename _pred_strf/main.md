@@ -19,4 +19,4 @@ This page contains supplementary materials to the preprint entitled "Prediction 
 
 * [Fig. 5.1: Spatio-temporal kriging predictor from data sampled from a simulation of the SPDE model and with a  measurement noise of standard-deviation $\sigma=0.1$. The blue points locate the places where the observations are taken. ](../PRED_STRF/krig)  
 
-* [Fig. 6.2: Simulation of a spatio-temporal random field on the globe obtained as solution to the SPDE with the wind advection field and the parameters $\hat{\kappa}^2$, $\hat{c}_{adv}$ and $\hat{c}$ estimated from AOD data. The plot shows three different viewpoints on the surface. ]
+* [Fig. 6.2: Simulation of a spatio-temporal random field on the globe obtained as solution to the SPDE with the wind advection field and the parameters $\hat{\kappa}^2$, $\hat{c}_{adv}$ and $\hat{c}$ estimated from AOD data. The plot shows three different viewpoints on the surface. ](../PRED_STRF/krig)  
