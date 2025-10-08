@@ -1,7 +1,7 @@
 ---
 layout: archive
 title: "Prediction of spatio-temporal data on meshed surfaces using advection-diffusion SPDEs"
-permalink: /PRED_STRF/krig
+permalink: /PRED_STRF/krig-aod
 author_profile: true
 ---
 
