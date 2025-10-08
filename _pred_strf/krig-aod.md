@@ -39,7 +39,6 @@ figcaption {
 <a id="krig"></a>
   <figcaption> Fig. 6.2: Spatio-temporal kriging of AOD on the globe represented from three different viewpoints on the surface. </figcaption>
 <img src="/images/STRF/zkrig_aod.gif" style="float:center;" alt="Numerical solution of the SPDE."><br>
-<img src="/images/STRF/legend_krig_sph.png" style="float:center;height:80px">  
 </div>
 
 
