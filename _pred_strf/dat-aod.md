@@ -38,7 +38,7 @@ figcaption {
 <div style="text-align:center;">
 <a id="krig"></a>
   <figcaption> Fig. 6.1: AOD data (after preprocessing) on the globe represented from three different viewpoints on the surface. </figcaption>
-<img src="/images/STRF/dat_aod.gif" style="float:center;" alt="Numerical solution of the SPDE."><br>
+<img src="/images/STRF/dat_aod.gif" style="float:center;" alt="AOD data."><br>
 </div>
 
 
