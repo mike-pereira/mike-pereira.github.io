@@ -1,0 +1,49 @@
+---
+layout: archive
+title: "A note on spatio-temporal random fields on meshed surfaces"
+permalink: /STRF/krig
+author_profile: true
+---
+
+<html>
+<head>
+<style>
+figcaption {
+  color: black;
+  font-style: bold;
+  padding: 2px;
+  font-size:100%;
+  text-align: center;
+}
+</style>
+</head>
+</html>
+
+
+
+
+<div style="text-align:center;">
+<br>
+</div>
+
+[Back to  Table of Figures.](../STRF) 
+
+<div style="text-align:center;">
+<br>
+</div>
+
+
+
+
+<div style="text-align:center;">
+<a id="krig"></a>
+  <figcaption> Fig. 6.2: Simulation of a spatio-temporal random field on the globe obtained as solution to the SPDE with the wind advection field and the parameters $\hat{\kappa}^2$, $\hat{c}_{adv}$ and $\hat{c}$ estimated from AOD data. The plot shows three different viewpoints on the surface. </figcaption>
+<img src="/images/STRF/zkrig_aod.gif" style="float:center;" alt="Numerical solution of the SPDE."><br>
+<img src="/images/STRF/legend_krig_sph.png" style="float:center;height:80px">  
+</div>
+
+
+
+
+
+

@@ -124,6 +124,7 @@ include:
   - files
   - _psl_sg
   - _strf
+  - _pred_strf
 exclude:
   - "*.sublime-project"
   - "*.sublime-workspace"
@@ -254,6 +255,13 @@ defaults:
       layout: single
       author_profile: true
   # _strf
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      author_profile: true
+  # _pred_strf
   - scope:
       path: ""
       type: pages
