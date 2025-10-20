@@ -38,7 +38,7 @@ figcaption {
 <div style="text-align:center;">
 <a id="krig"></a>
   <figcaption> Fig. 6.2: Spatio-temporal kriging of AOD on the globe represented from three different viewpoints on the surface. The black points locate the places where the observations are taken. </figcaption>
-<img src="/images/STRF/dat-krig.gif" style="float:center;" alt="AOD kriging prediction."><br>
+<img src="/images/STRF/dat_krig.gif" style="float:center;" alt="AOD kriging prediction."><br>
 </div>
 
 
