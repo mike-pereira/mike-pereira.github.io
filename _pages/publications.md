@@ -8,7 +8,15 @@ author_profile: true
 Preprints
 ----
 
-* Cardoso, G. V., & **P., M.**. (2025). [Predictive posterior sampling from non-stationary Gaussian process priors via Diffusion models with application to climate data.](https://arxiv.org/abs/2505.24556) *arXiv Preprint arXiv:2505. 24556.*
+* Sire, C., & **P., M.** (2026). [Uncertainty Quantification of Spline Predictors on Compact Riemannian Manifolds.](https://arxiv.org/abs/2603.24259) *arXiv preprint arXiv:2603.24259.*
+
+* Sire, C., **P., M.**, & Romary, T. (2025). [Spline Interpolation on Compact Riemannian Manifolds.](https://arxiv.org/abs/2510.11239) *arXiv preprint arXiv:2510.11239.*
+
+* **P., M.**, Clarotto, L., & Desassis, N. (2025). [Prediction of spatio-temporal data on meshed surfaces using advection-diffusion SPDEs](https://hal.science/hal-04132148) *hal-04132148.*
+
+* Wiersdalen, S., **P., M.**, Lang, A., Szederkenyi, G., Auriol, J., & Kulcsar, B. (2025). [Stability Analysis of Compartmental and Cooperative Systems.](https://arxiv.org/pdf/2312.11061) *arXiv preprint arXiv:2312.11061.*
+
+* Cardoso, G. V., & **P., M.**. (2025). [Predictive posterior sampling from non-stationary Gaussian process priors via Diffusion models with application to climate data.](https://https://hal.science/hal-05080651) *hal-05080651v2*
 
 * Jansson, E., Lang, A., & **P., M.**. (2024). [Non-stationary Gaussian random fields on hypersurfaces: Sampling and strong error analysis.](https://arxiv.org/abs/2406.08185) *arXiv Preprint arXiv:2406. 08185.*
 
@@ -51,8 +59,6 @@ Proceedings
 
 Notes
 ----
-
-* **P., M.** (2023). [A note on spatio-temporal random fields on meshed surfaces defined from advection-diffusion SPDEs.](../../files/strf.pdf) hal-04132148.
 
 * **P., M.**, Desassis, N., Magneron, C., and Palmer, N. (2020). [A matrix-free approach to geostatistical filtering.](https://arxiv.org/abs/2004.02799) *arXiv preprint arXiv:2004.02799.*
 
